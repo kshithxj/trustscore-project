@@ -1,0 +1,164 @@
+{
+  "n_applicants": 307511,
+  "n_columns_base": 125,
+  "train_row_count": 307511,
+  "target_mean": 0.080729,
+  "duplicate_sk_id_curr": 0,
+  "stratification_used": "target_x_segment",
+  "smallest_stratum": 157,
+  "segment_counts": {
+    "overall": {
+      "full_file": 263491,
+      "thin_file": 41820,
+      "no_file": 2200
+    },
+    "train": {
+      "full_file": 158094,
+      "thin_file": 25092,
+      "no_file": 1320
+    },
+    "valid": {
+      "full_file": 52698,
+      "thin_file": 8364,
+      "no_file": 440
+    },
+    "test": {
+      "full_file": 52699,
+      "thin_file": 8364,
+      "no_file": 440
+    }
+  },
+  "default_rate_by_segment": {
+    "full_file": 0.077301,
+    "no_file": 0.071364,
+    "thin_file": 0.102822
+  },
+  "default_rate_by_split": {
+    "train": {
+      "overall": 0.080729,
+      "by_segment": {
+        "full_file": 0.077302,
+        "no_file": 0.071212,
+        "thin_file": 0.102822
+      }
+    },
+    "valid": {
+      "overall": 0.080729,
+      "by_segment": {
+        "full_file": 0.077289,
+        "no_file": 0.072727,
+        "thin_file": 0.102822
+      }
+    },
+    "test": {
+      "overall": 0.080728,
+      "by_segment": {
+        "full_file": 0.077307,
+        "no_file": 0.070455,
+        "thin_file": 0.102822
+      }
+    }
+  },
+  "gender_counts": {
+    "F": 202448,
+    "M": 105059,
+    "XNA": 4
+  },
+  "age_bin_counts": {
+    "<30": 45137,
+    "30-44": 123765,
+    "45-59": 103283,
+    "60+": 35326
+  },
+  "missingness": {
+    "EXT_SOURCE_1": {
+      "n_missing": 173378,
+      "pct_missing": 56.38
+    },
+    "EXT_SOURCE_2": {
+      "n_missing": 660,
+      "pct_missing": 0.21
+    },
+    "EXT_SOURCE_3": {
+      "n_missing": 60965,
+      "pct_missing": 19.83
+    },
+    "AMT_GOODS_PRICE": {
+      "n_missing": 278,
+      "pct_missing": 0.09
+    },
+    "AMT_ANNUITY": {
+      "n_missing": 12,
+      "pct_missing": 0.0
+    },
+    "OCCUPATION_TYPE": {
+      "n_missing": 96391,
+      "pct_missing": 31.35
+    },
+    "OWN_CAR_AGE": {
+      "n_missing": 202929,
+      "pct_missing": 65.99
+    },
+    "DAYS_EMPLOYED": {
+      "n_missing": 55374,
+      "pct_missing": 18.01
+    },
+    "APARTMENTS_AVG": {
+      "n_missing": 156061,
+      "pct_missing": 50.75
+    },
+    "BASEMENTAREA_AVG": {
+      "n_missing": 179943,
+      "pct_missing": 58.52
+    },
+    "YEARS_BEGINEXPLUATATION_AVG": {
+      "n_missing": 150007,
+      "pct_missing": 48.78
+    },
+    "YEARS_BUILD_AVG": {
+      "n_missing": 204488,
+      "pct_missing": 66.5
+    },
+    "COMMONAREA_AVG": {
+      "n_missing": 214865,
+      "pct_missing": 69.87
+    },
+    "ELEVATORS_AVG": {
+      "n_missing": 163891,
+      "pct_missing": 53.3
+    },
+    "ENTRANCES_AVG": {
+      "n_missing": 154828,
+      "pct_missing": 50.35
+    },
+    "FLOORSMAX_AVG": {
+      "n_missing": 153020,
+      "pct_missing": 49.76
+    },
+    "FLOORSMIN_AVG": {
+      "n_missing": 208642,
+      "pct_missing": 67.85
+    },
+    "LANDAREA_AVG": {
+      "n_missing": 182590,
+      "pct_missing": 59.38
+    },
+    "LIVINGAPARTMENTS_AVG": {
+      "n_missing": 210199,
+      "pct_missing": 68.35
+    },
+    "LIVINGAREA_AVG": {
+      "n_missing": 154350,
+      "pct_missing": 50.19
+    },
+    "NONLIVINGAPARTMENTS_AVG": {
+      "n_missing": 213514,
+      "pct_missing": 69.43
+    },
+    "NONLIVINGAREA_AVG": {
+      "n_missing": 169682,
+      "pct_missing": 55.18
+    }
+  },
+  "warnings": []
+}

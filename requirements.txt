@@ -1,0 +1,38 @@
+# Python 3.14 detected (requirements originally targeted 3.10;
+# some pins may need loosening for 3.14 compatibility)
+# ============================================================
+# Home Credit Default Risk – Pinned Dependencies
+# ============================================================
+
+# --- Core data & ML ---
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.1
+lightgbm==4.4.0
+xgboost==2.1.1
+
+# --- Fairness ---
+fairlearn==0.10.0
+aif360==0.6.1
+
+# --- Explainability ---
+shap==0.46.0
+
+# --- Visualization ---
+matplotlib==3.9.2
+seaborn==0.13.2
+
+# --- Configuration & utilities ---
+pyyaml==6.0.2
+python-dotenv==1.0.1
+
+# --- Notebooks ---
+jupyterlab==4.2.5
+ipykernel==6.29.5
+
+# --- Testing ---
+pytest==8.3.3
+
+# --- Statistical helpers ---
+scipy==1.14.1
+statsmodels==0.14.2

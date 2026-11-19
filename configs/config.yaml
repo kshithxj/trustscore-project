@@ -1,0 +1,35 @@
+# ============================================================
+# Home Credit Default Risk – Master Configuration
+# ============================================================
+
+# --- Reproducibility ---
+seed: 42
+
+# --- Target & ID ---
+target_column: TARGET
+id_column: SK_ID_CURR
+
+# --- Train / Validation / Test split ---
+split:
+  train: 0.6
+  valid: 0.2
+  test: 0.2
+
+# --- Business constraints ---
+decline_rate: 0.15        # top-15 % riskiest applicants declined
+bootstrap_n: 200          # bootstrap iterations for CI
+
+# --- Paths ---
+paths:
+  raw:          data/raw/home_credit
+  processed:    data/processed
+  splits:       data/splits
+  src:          src
+  reports:      reports
+  metrics:      reports/metrics
+  figures:      reports/figures
+  predictions:  reports/predictions
+  configs:      configs
+  notebooks:    notebooks
+  tests:        tests
+  docs:         docs

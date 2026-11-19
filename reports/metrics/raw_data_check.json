@@ -1,0 +1,72 @@
+{
+  "application_train.csv": {
+    "status": "PASS",
+    "row_count": 307511,
+    "required_columns_present": {
+      "SK_ID_CURR": true,
+      "TARGET": true,
+      "CODE_GENDER": true,
+      "DAYS_BIRTH": true
+    },
+    "duplicate_sk_id_curr_count": 0,
+    "target_mean": 0.08072881945686496,
+    "first_5_sk_id_curr": [
+      100002,
+      100003,
+      100004,
+      100006,
+      100007
+    ],
+    "ids_shared_with_test": 0
+  },
+  "application_test.csv": {
+    "status": "PASS",
+    "row_count": 48744,
+    "has_no_target": true
+  },
+  "bureau.csv": {
+    "status": "PASS",
+    "row_count": 1716428,
+    "has_sk_id_curr": true,
+    "unique_sk_id_curr_count": 305811,
+    "unique_sk_id_curr_in_train_count": 263491,
+    "share_unique_sk_id_curr_in_train": 0.861614,
+    "share_rows_in_train": 0.853706
+  },
+  "previous_application.csv": {
+    "status": "PASS",
+    "row_count": 1670214,
+    "has_sk_id_curr": true,
+    "unique_sk_id_curr_count": 338857,
+    "unique_sk_id_curr_in_train_count": 291057,
+    "share_unique_sk_id_curr_in_train": 0.858938,
+    "share_rows_in_train": 0.846419
+  },
+  "installments_payments.csv": {
+    "status": "PASS",
+    "row_count": 13605401,
+    "has_sk_id_curr": true,
+    "unique_sk_id_curr_count": 339587,
+    "unique_sk_id_curr_in_train_count": 291643,
+    "share_unique_sk_id_curr_in_train": 0.858817,
+    "share_rows_in_train": 0.851985
+  },
+  "POS_CASH_balance.csv": {
+    "status": "PASS",
+    "row_count": 10001358,
+    "has_sk_id_curr": true,
+    "unique_sk_id_curr_count": 337252,
+    "unique_sk_id_curr_in_train_count": 289444,
+    "share_unique_sk_id_curr_in_train": 0.858243,
+    "share_rows_in_train": 0.854221
+  },
+  "credit_card_balance.csv": {
+    "status": "PASS",
+    "row_count": 3840312,
+    "has_sk_id_curr": true,
+    "unique_sk_id_curr_count": 103558,
+    "unique_sk_id_curr_in_train_count": 86905,
+    "share_unique_sk_id_curr_in_train": 0.839192,
+    "share_rows_in_train": 0.840548
+  }
+}

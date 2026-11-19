@@ -1,0 +1,31 @@
+# ---- Data & models (large / generated) ----
+/data/
+models/
+
+# ---- Reports: only predictions are ignored ----
+reports/predictions/
+
+# ---- Scratch / temporary scripts ----
+scratch/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# ---- Virtual environments ----
+venv/
+.venv/
+env/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- Secrets ----
+.env
+
+# ---- OS junk ----
+.DS_Store
+Thumbs.db
