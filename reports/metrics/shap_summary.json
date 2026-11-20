@@ -1,0 +1,221 @@
+{
+  "metadata": {
+    "method": "shap.TreeExplainer",
+    "reason": "shap 0.54.1 TreeExplainer natively evaluates XGBoost booster trees with categorical support",
+    "scale": "margin (log-odds)",
+    "sample_sizes": {
+      "full_file": 2500,
+      "thin_file": 2000,
+      "no_file": 440,
+      "total": 4940
+    }
+  },
+  "segment_summaries": {
+    "full_file": {
+      "sample_size": 2500,
+      "total_mean_abs_shap": 3.2432217597961426,
+      "behavioral_mean_abs_shap": 0.768492579460144,
+      "behavioral_share": 0.23695344826141299,
+      "top_15_features": {
+        "EXT_SOURCE_2": 0.3480294644832611,
+        "EXT_SOURCE_3": 0.34615758061408997,
+        "EXT_SOURCE_1": 0.1595338135957718,
+        "AMT_GOODS_PRICE": 0.12316770106554031,
+        "ORGANIZATION_TYPE": 0.1151045635342598,
+        "AMT_CREDIT": 0.10777085274457932,
+        "prev_mean_amt_annuity": 0.10582444071769714,
+        "prev_mean_amt_credit": 0.10260407626628876,
+        "pos_n_records": 0.10046147555112839,
+        "DAYS_EMPLOYED": 0.09911966323852539,
+        "OCCUPATION_TYPE": 0.09187915921211243,
+        "inst_frac_late": 0.0911092534661293,
+        "bureau_total_debt": 0.08708257973194122,
+        "AMT_ANNUITY": 0.0826306864619255,
+        "NAME_EDUCATION_TYPE": 0.08023520559072495
+      }
+    },
+    "thin_file": {
+      "sample_size": 2000,
+      "total_mean_abs_shap": 2.8934712409973145,
+      "behavioral_mean_abs_shap": 0.8467681407928467,
+      "behavioral_share": 0.2926478510638263,
+      "top_15_features": {
+        "EXT_SOURCE_2": 0.39369162917137146,
+        "EXT_SOURCE_1": 0.1518615484237671,
+        "AMT_GOODS_PRICE": 0.11948645114898682,
+        "AMT_CREDIT": 0.11720237880945206,
+        "prev_mean_amt_annuity": 0.11560752987861633,
+        "pos_n_records": 0.11313748359680176,
+        "inst_frac_late": 0.11157245188951492,
+        "ORGANIZATION_TYPE": 0.1039726585149765,
+        "prev_mean_amt_credit": 0.09929594397544861,
+        "DAYS_EMPLOYED": 0.0930245965719223,
+        "AMT_ANNUITY": 0.08392774313688278,
+        "NAME_EDUCATION_TYPE": 0.08352719992399216,
+        "OCCUPATION_TYPE": 0.0831473097205162,
+        "OWN_CAR_AGE": 0.07112365961074829,
+        "EXT_SOURCE_3": 0.0645562931895256
+      }
+    },
+    "no_file": {
+      "sample_size": 440,
+      "total_mean_abs_shap": 2.726104974746704,
+      "behavioral_mean_abs_shap": 0.3909156024456024,
+      "behavioral_share": 0.14339712009143166,
+      "top_15_features": {
+        "EXT_SOURCE_2": 0.4394591450691223,
+        "EXT_SOURCE_1": 0.14458584785461426,
+        "NAME_EDUCATION_TYPE": 0.14201977849006653,
+        "AMT_GOODS_PRICE": 0.13422302901744843,
+        "ORGANIZATION_TYPE": 0.1251450628042221,
+        "DAYS_EMPLOYED": 0.09452183544635773,
+        "AMT_CREDIT": 0.092073455452919,
+        "AMT_ANNUITY": 0.08466725796461105,
+        "OWN_CAR_AGE": 0.07924039661884308,
+        "OCCUPATION_TYPE": 0.07693474739789963,
+        "EXT_SOURCE_3": 0.07534501701593399,
+        "pos_n_records": 0.06800202280282974,
+        "NAME_CONTRACT_TYPE": 0.06698238849639893,
+        "prev_mean_amt_annuity": 0.061173152178525925,
+        "FLAG_DOCUMENT_3": 0.05428455397486687
+      }
+    }
+  },
+  "behavioral_share_by_segment": {
+    "full_file": 0.23695344826141299,
+    "thin_file": 0.2926478510638263,
+    "no_file": 0.14339712009143166
+  },
+  "top_behavioral_feature": {
+    "feature": "prev_mean_amt_annuity",
+    "mean_abs_shap": 0.10580817610025406
+  },
+  "gender_comparison": {
+    "top_10_features": {
+      "Female (F)": {
+        "DAYS_EMPLOYED": 0.09506846964359283,
+        "prev_mean_amt_credit": 0.09718234837055206,
+        "pos_n_records": 0.1022639125585556,
+        "ORGANIZATION_TYPE": 0.10614658147096634,
+        "prev_mean_amt_annuity": 0.10762938857078552,
+        "AMT_CREDIT": 0.1099359318614006,
+        "AMT_GOODS_PRICE": 0.12009624391794205,
+        "EXT_SOURCE_1": 0.16502824425697327,
+        "EXT_SOURCE_3": 0.2110648900270462,
+        "EXT_SOURCE_2": 0.37428566813468933
+      },
+      "Male (M)": {
+        "DAYS_EMPLOYED": 0.09831397235393524,
+        "prev_mean_amt_credit": 0.09557466953992844,
+        "pos_n_records": 0.10347592085599899,
+        "ORGANIZATION_TYPE": 0.12092355638742447,
+        "prev_mean_amt_annuity": 0.10259479284286499,
+        "AMT_CREDIT": 0.11064141243696213,
+        "AMT_GOODS_PRICE": 0.127189040184021,
+        "EXT_SOURCE_1": 0.13757212460041046,
+        "EXT_SOURCE_3": 0.2026696801185608,
+        "EXT_SOURCE_2": 0.3753197193145752
+      }
+    },
+    "top_5_mean_abs_diff": {
+      "EXT_SOURCE_1": 0.027456119656562805,
+      "OWN_CAR_AGE": 0.025055281817913055,
+      "OCCUPATION_TYPE": 0.020775988698005676,
+      "ORGANIZATION_TYPE": 0.01477697491645813,
+      "EXT_SOURCE_3": 0.008395209908485413
+    }
+  },
+  "binary_age_comparison": {
+    "top_10_features": {
+      "< median age": {
+        "prev_mean_amt_credit": 0.08732612431049347,
+        "DAYS_EMPLOYED": 0.09277723729610443,
+        "prev_mean_amt_annuity": 0.09958971291780472,
+        "pos_n_records": 0.10300286114215851,
+        "AMT_CREDIT": 0.1067141517996788,
+        "ORGANIZATION_TYPE": 0.1245698407292366,
+        "AMT_GOODS_PRICE": 0.12513063848018646,
+        "EXT_SOURCE_1": 0.16799476742744446,
+        "EXT_SOURCE_3": 0.19478130340576172,
+        "EXT_SOURCE_2": 0.38217228651046753
+      },
+      ">= median age": {
+        "prev_mean_amt_credit": 0.10640058666467667,
+        "DAYS_EMPLOYED": 0.09990397095680237,
+        "prev_mean_amt_annuity": 0.11237871646881104,
+        "pos_n_records": 0.10238479822874069,
+        "AMT_CREDIT": 0.1138649731874466,
+        "ORGANIZATION_TYPE": 0.09767372906208038,
+        "AMT_GOODS_PRICE": 0.12005357444286346,
+        "EXT_SOURCE_1": 0.1414673924446106,
+        "EXT_SOURCE_3": 0.22202470898628235,
+        "EXT_SOURCE_2": 0.3667217791080475
+      }
+    },
+    "top_5_mean_abs_diff": {
+      "EXT_SOURCE_3": 0.02724340558052063,
+      "ORGANIZATION_TYPE": 0.02689611166715622,
+      "EXT_SOURCE_1": 0.026527374982833862,
+      "NAME_EDUCATION_TYPE": 0.025830231606960297,
+      "prev_mean_amt_credit": 0.019074462354183197
+    }
+  },
+  "chosen_local_applicant": {
+    "SK_ID_CURR": 333107,
+    "segment": "thin_file",
+    "score": 0.21528178453445435,
+    "threshold": 0.144659,
+    "target": 0,
+    "base_value_log_odds": -2.4508321285247803,
+    "top_8_contributions": [
+      {
+        "feature": "EXT_SOURCE_2",
+        "shap_value": 1.1069397926330566,
+        "abs_shap": 1.1069397926330566,
+        "feature_value": 0.034333358255672485
+      },
+      {
+        "feature": "DAYS_EMPLOYED",
+        "shap_value": -0.16299057006835938,
+        "abs_shap": 0.16299057006835938,
+        "feature_value": -4421.0
+      },
+      {
+        "feature": "AMT_CREDIT",
+        "shap_value": 0.13420194387435913,
+        "abs_shap": 0.13420194387435913,
+        "feature_value": 755190.0
+      },
+      {
+        "feature": "pos_n_records",
+        "shap_value": -0.12493988871574402,
+        "abs_shap": 0.12493988871574402,
+        "feature_value": 35.0
+      },
+      {
+        "feature": "AMT_ANNUITY",
+        "shap_value": 0.12137369066476822,
+        "abs_shap": 0.12137369066476822,
+        "feature_value": 30078.0
+      },
+      {
+        "feature": "ORGANIZATION_TYPE",
+        "shap_value": -0.10177566111087799,
+        "abs_shap": 0.10177566111087799,
+        "feature_value": "Other"
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "shap_value": 0.0948977842926979,
+        "abs_shap": 0.0948977842926979,
+        "feature_value": NaN
+      },
+      {
+        "feature": "prev_mean_amt_annuity",
+        "shap_value": 0.08366332948207855,
+        "abs_shap": 0.08366332948207855,
+        "feature_value": 8808.75
+      }
+    ]
+  }
+}

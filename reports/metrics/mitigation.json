@@ -1,0 +1,469 @@
+{
+  "metadata": {
+    "fairlearn_version": "0.15.0",
+    "prefit_supported": true,
+    "estimator_handling": "Wrapped Model B in Float64XGBWrapper with prefit=True; no refitting performed",
+    "score_match_max_diff": {
+      "validation": 0.0,
+      "test": 0.0
+    },
+    "objective": "balanced_accuracy_score",
+    "random_state": 42,
+    "unmitigated_threshold": 0.144659,
+    "train_median_age": 43.12,
+    "test_xna_count": 1,
+    "val_xna_count": 1,
+    "bootstrap_n": 200,
+    "disclaimers": [
+      "Mitigation changes the decline rate, representing a fairness-accuracy trade-off, not a comparison at a fixed 15% decline rate.",
+      "AUC of underlying score is identical across rows by construction because only decision thresholds move.",
+      "CIs reflect test sampling variation only (thresholds are fixed post-validation).",
+      "Using gender or age at decision time is legally and ethically contested; this is an experiment only.",
+      "If mitigation yields little or no improvement, that is faithfully recorded as the result."
+    ]
+  },
+  "experiments": {
+    "gender": {
+      "unmitigated": {
+        "decline_rate": 0.14815778348671588,
+        "default_capture": 0.4503524672708963,
+        "balanced_accuracy": 0.664366498417803,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.8756074097826891,
+            "tpr": 0.41421568627450983,
+            "fpr": 0.10242802175932068
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.8058775821764229,
+            "tpr": 0.4992887624466572,
+            "fpr": 0.15998302567366857
+          }
+        },
+        "demographic_parity_difference": 0.06972982760626623,
+        "demographic_parity_ratio": 0.9203640503412688,
+        "equalized_odds_difference": 0.08507307617214738,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.1452436506129882,
+            0.15102069851386946
+          ],
+          "default_capture": [
+            0.43508569411303666,
+            0.4631959015624964
+          ],
+          "balanced_accuracy": [
+            0.6563436420752538,
+            0.6707641010787451
+          ],
+          "demographic_parity_difference": [
+            0.06329844470515433,
+            0.07726224834541011
+          ],
+          "demographic_parity_ratio": [
+            0.9120372834676669,
+            0.9275698177043665
+          ],
+          "equalized_odds_difference": [
+            0.058591425071651694,
+            0.11221882214224178
+          ],
+          "approval_rate_F": [
+            0.8727676919661578,
+            0.8789170222737476
+          ],
+          "approval_rate_M": [
+            0.7998604551309575,
+            0.8110347788750537
+          ],
+          "tpr_F": [
+            0.3973392430812707,
+            0.43153125397653025
+          ],
+          "tpr_M": [
+            0.4794620261111468,
+            0.5196865759528605
+          ],
+          "fpr_F": [
+            0.09936772752032617,
+            0.10564130459001407
+          ],
+          "fpr_M": [
+            0.15458506558086457,
+            0.16605683527907728
+          ]
+        }
+      },
+      "equalized_odds": {
+        "decline_rate": 0.38078436473610616,
+        "default_capture": 0.7254783484390736,
+        "balanced_accuracy": 0.6874822628163848,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.6232209368293826,
+            "tpr": 0.7303921568627451,
+            "fpr": 0.34998009818230064
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.6114689184676303,
+            "tpr": 0.7188240872451399,
+            "fpr": 0.3515807341396138
+          }
+        },
+        "demographic_parity_difference": 0.011752018361752326,
+        "demographic_parity_ratio": 0.9811430944192274,
+        "equalized_odds_difference": 0.011568069617605148,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.3772011479301486,
+            0.38446148092744953
+          ],
+          "default_capture": [
+            0.712867099739022,
+            0.7386326025210675
+          ],
+          "balanced_accuracy": [
+            0.6802977168147013,
+            0.6944070784941853
+          ],
+          "demographic_parity_difference": [
+            0.005016744771185236,
+            0.01961183587701734
+          ],
+          "demographic_parity_ratio": [
+            0.9686054515407226,
+            0.9918941398265104
+          ],
+          "equalized_odds_difference": [
+            0.002207843981687731,
+            0.03844108683335948
+          ],
+          "approval_rate_F": [
+            0.619200315729755,
+            0.6274234725339779
+          ],
+          "approval_rate_M": [
+            0.6049806784027479,
+            0.6181014741663088
+          ],
+          "tpr_F": [
+            0.7147851412244468,
+            0.7455330953566883
+          ],
+          "tpr_M": [
+            0.6992536105109717,
+            0.736842727974693
+          ],
+          "fpr_F": [
+            0.34539565099165814,
+            0.3541558466733817
+          ],
+          "fpr_M": [
+            0.3453757241675311,
+            0.3579397563087947
+          ]
+        }
+      },
+      "demographic_parity": {
+        "decline_rate": 0.35026503203147863,
+        "default_capture": 0.7039274924471299,
+        "balanced_accuracy": 0.69236030069232,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.648947978589576,
+            "tpr": 0.72093837535014,
+            "fpr": 0.32301976913891467
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.651257096512571,
+            "tpr": 0.680891417733523,
+            "fpr": 0.3115849777211967
+          }
+        },
+        "demographic_parity_difference": 0.002309117922995041,
+        "demographic_parity_ratio": 0.9964543681207312,
+        "equalized_odds_difference": 0.04004695761661703,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.34688099573997594,
+            0.35364825534128974
+          ],
+          "default_capture": [
+            0.6930518894639635,
+            0.7153552293408452
+          ],
+          "balanced_accuracy": [
+            0.6868612465344401,
+            0.6990040389182739
+          ],
+          "demographic_parity_difference": [
+            0.00014516423588614437,
+            0.010329617839478646
+          ],
+          "demographic_parity_ratio": [
+            0.9842286811034959,
+            0.9997770825140293
+          ],
+          "equalized_odds_difference": [
+            0.015126896644077245,
+            0.06627530376370015
+          ],
+          "approval_rate_F": [
+            0.6447028933672085,
+            0.6532411632668164
+          ],
+          "approval_rate_M": [
+            0.6455786937646105,
+            0.656888984304184
+          ],
+          "tpr_F": [
+            0.7055928403971542,
+            0.7365187652373818
+          ],
+          "tpr_M": [
+            0.6636529808388826,
+            0.7000012036591237
+          ],
+          "fpr_F": [
+            0.3183236046746682,
+            0.32762173716347004
+          ],
+          "fpr_M": [
+            0.30566784769479594,
+            0.3176590648078471
+          ]
+        }
+      }
+    },
+    "binary_age": {
+      "unmitigated": {
+        "decline_rate": 0.14815537453457556,
+        "default_capture": 0.4503524672708963,
+        "balanced_accuracy": 0.6643675739729202,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.7976644885812253,
+            "tpr": 0.5190413657255417,
+            "fpr": 0.16771924788287643
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.9066004119127791,
+            "tpr": 0.341323606044815,
+            "fpr": 0.07680502267178235
+          }
+        },
+        "demographic_parity_difference": 0.10893592333155377,
+        "demographic_parity_ratio": 0.8798413039525134,
+        "equalized_odds_difference": 0.17771775968072673,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.14532624424824805,
+            0.15108368697461913
+          ],
+          "default_capture": [
+            0.43693726488034706,
+            0.4653889029700694
+          ],
+          "balanced_accuracy": [
+            0.6577611611719957,
+            0.6717234217016583
+          ],
+          "demographic_parity_difference": [
+            0.1025320415098893,
+            0.11466666770689203
+          ],
+          "demographic_parity_ratio": [
+            0.8738372714548961,
+            0.8865605001984677
+          ],
+          "equalized_odds_difference": [
+            0.15115592748408727,
+            0.20295368911763392
+          ],
+          "approval_rate_<median": [
+            0.7929724396713463,
+            0.8019036682409265
+          ],
+          "approval_rate_>=median": [
+            0.9029708391905588,
+            0.9096750465853739
+          ],
+          "tpr_<median": [
+            0.5009725991366039,
+            0.5380279386919288
+          ],
+          "tpr_>=median": [
+            0.32207226121920934,
+            0.36365869136034595
+          ],
+          "fpr_<median": [
+            0.16385534524885562,
+            0.1723441379489761
+          ],
+          "fpr_>=median": [
+            0.07347261014631963,
+            0.07990069461412266
+          ]
+        }
+      },
+      "equalized_odds": {
+        "decline_rate": 0.30910687283547145,
+        "default_capture": 0.6487411883182276,
+        "balanced_accuracy": 0.6847299984535706,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.6864527398589636,
+            "tpr": 0.650032829940906,
+            "fpr": 0.27676905411224345
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.6953806924057668,
+            "tpr": 0.6466909848879625,
+            "fpr": 0.2817230554586676
+          }
+        },
+        "demographic_parity_difference": 0.00892795254680323,
+        "demographic_parity_ratio": 0.9871610577568444,
+        "equalized_odds_difference": 0.004954001346424153,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.3052973025706063,
+            0.3125274376859665
+          ],
+          "default_capture": [
+            0.6346509446351851,
+            0.6614732397328622
+          ],
+          "balanced_accuracy": [
+            0.6781413358579651,
+            0.6903945615183545
+          ],
+          "demographic_parity_difference": [
+            0.0022739715439960176,
+            0.01514389747893621
+          ],
+          "demographic_parity_ratio": [
+            0.9782711547149039,
+            0.9967093058747974
+          ],
+          "equalized_odds_difference": [
+            0.0029550321942204997,
+            0.03284223450040699
+          ],
+          "approval_rate_<median": [
+            0.6809495697742123,
+            0.6912733712880895
+          ],
+          "approval_rate_>=median": [
+            0.690181110856844,
+            0.7004159992154042
+          ],
+          "tpr_<median": [
+            0.6314424309710506,
+            0.6667784313455335
+          ],
+          "tpr_>=median": [
+            0.6244821567247048,
+            0.6668985148514852
+          ],
+          "fpr_<median": [
+            0.2714159076384049,
+            0.2818467369779999
+          ],
+          "fpr_>=median": [
+            0.2763440483593008,
+            0.2876399419338673
+          ]
+        }
+      },
+      "demographic_parity": {
+        "decline_rate": 0.33686161650651186,
+        "default_capture": 0.6845921450151058,
+        "balanced_accuracy": 0.6891335977118402,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.6652972763149383,
+            "tpr": 0.6894287590282338,
+            "fpr": 0.29593081670733457
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.6609565530092517,
+            "tpr": 0.6769150599270454,
+            "fpr": 0.316428322288106
+          }
+        },
+        "demographic_parity_difference": 0.004340723305686578,
+        "demographic_parity_ratio": 0.9934755131875337,
+        "equalized_odds_difference": 0.020497505580771458,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.3333459343446661,
+            0.3398561858771117
+          ],
+          "default_capture": [
+            0.671321516640037,
+            0.6972296242545459
+          ],
+          "balanced_accuracy": [
+            0.6825101435480322,
+            0.6954262410928902
+          ],
+          "demographic_parity_difference": [
+            0.00021418047148926146,
+            0.01307858782714615
+          ],
+          "demographic_parity_ratio": [
+            0.9804290660169054,
+            0.999677183088456
+          ],
+          "equalized_odds_difference": [
+            0.014031476759614728,
+            0.03727795407160041
+          ],
+          "approval_rate_<median": [
+            0.6602097755062432,
+            0.6708295594229152
+          ],
+          "approval_rate_>=median": [
+            0.6548097355258427,
+            0.665537448102259
+          ],
+          "tpr_<median": [
+            0.6693376319066884,
+            0.7050407958279906
+          ],
+          "tpr_>=median": [
+            0.6564261374699812,
+            0.6982406228425085
+          ],
+          "fpr_<median": [
+            0.29049159312438977,
+            0.3013433191591296
+          ],
+          "fpr_>=median": [
+            0.3118675140610002,
+            0.3226533670933251
+          ]
+        }
+      }
+    }
+  }
+}
