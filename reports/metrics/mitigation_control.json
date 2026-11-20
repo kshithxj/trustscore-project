@@ -1,0 +1,837 @@
+{
+  "metadata": {
+    "objective": "balanced_accuracy_score",
+    "random_state": 42,
+    "bootstrap_n": 200,
+    "train_median_age": 43.12,
+    "test_xna_count": 1,
+    "val_xna_count": 1,
+    "disclaimers": [
+      "The control uses a single threshold and no sensitive attribute at decision time.",
+      "Conclusions about fairness gains must be read from the paired differences vs the control, not vs the 15% row.",
+      "CIs reflect test sampling only.",
+      "Using gender or age at decision time is contested and may be unlawful in some jurisdictions, and this is an experiment only.",
+      "If the mitigation gives little or no improvement over the control, report that as the result."
+    ],
+    "max_reproduction_abs_diff": {
+      "decline_rate": 0.0,
+      "dp_difference": 0.0
+    }
+  },
+  "reproduction_verification": {
+    "gender_equalized_odds": {
+      "mitigated_test_decline_reproduced": 0.38078436473610616,
+      "mitigated_test_decline_orig": 0.38078436473610616,
+      "abs_diff_decline": 0.0,
+      "mitigated_test_dp_reproduced": 0.011752018361752326,
+      "mitigated_test_dp_orig": 0.011752018361752326,
+      "abs_diff_dp": 0.0
+    },
+    "gender_demographic_parity": {
+      "mitigated_test_decline_reproduced": 0.35026503203147863,
+      "mitigated_test_decline_orig": 0.35026503203147863,
+      "abs_diff_decline": 0.0,
+      "mitigated_test_dp_reproduced": 0.002309117922995041,
+      "mitigated_test_dp_orig": 0.002309117922995041,
+      "abs_diff_dp": 0.0
+    },
+    "binary_age_equalized_odds": {
+      "mitigated_test_decline_reproduced": 0.30910687283547145,
+      "mitigated_test_decline_orig": 0.30910687283547145,
+      "abs_diff_decline": 0.0,
+      "mitigated_test_dp_reproduced": 0.00892795254680323,
+      "mitigated_test_dp_orig": 0.00892795254680323,
+      "abs_diff_dp": 0.0
+    },
+    "binary_age_demographic_parity": {
+      "mitigated_test_decline_reproduced": 0.33686161650651186,
+      "mitigated_test_decline_orig": 0.33686161650651186,
+      "abs_diff_decline": 0.0,
+      "mitigated_test_dp_reproduced": 0.004340723305686578,
+      "mitigated_test_dp_orig": 0.004340723305686578,
+      "abs_diff_dp": 0.0
+    }
+  },
+  "runs": {
+    "gender_equalized_odds": {
+      "sensitive_feature": "gender",
+      "constraint": "equalized_odds",
+      "validation_target_decline_rate": 0.3819775288206696,
+      "control_threshold": 0.06687342897158084,
+      "mitigated": {
+        "decline_rate": 0.38078436473610616,
+        "default_capture": 0.7254783484390736,
+        "overall_fpr": 0.35051382280630383,
+        "balanced_accuracy": 0.6874822628163848,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.6232209368293826,
+            "tpr": 0.7303921568627451,
+            "fpr": 0.34998009818230064
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.6114689184676303,
+            "tpr": 0.7188240872451399,
+            "fpr": 0.3515807341396138
+          }
+        },
+        "demographic_parity_difference": 0.011752018361752326,
+        "demographic_parity_ratio": 0.9811430944192274,
+        "equalized_odds_difference": 0.011568069617605148,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.3767031966440116,
+            0.38500008129816915
+          ],
+          "default_capture": [
+            0.7140117195415224,
+            0.7375694881889764
+          ],
+          "overall_fpr": [
+            0.34661068998301514,
+            0.3546082085927978
+          ],
+          "balanced_accuracy": [
+            0.6817705988993658,
+            0.69344195988095
+          ],
+          "dp_difference": [
+            0.003850119302833366,
+            0.020135946796181026
+          ],
+          "dp_ratio": [
+            0.9679195167826091,
+            0.9938150203447066
+          ],
+          "eo_difference": [
+            0.00212666851358226,
+            0.03643083917108683
+          ],
+          "approval_rate_F": [
+            0.618705138008436,
+            0.6277873017439135
+          ],
+          "approval_rate_M": [
+            0.6044964457802585,
+            0.6183948761986546
+          ],
+          "tpr_F": [
+            0.7148320455492055,
+            0.7449863294786842
+          ],
+          "tpr_M": [
+            0.697973850409582,
+            0.7378777720574712
+          ],
+          "fpr_F": [
+            0.3451178351623471,
+            0.3544829220790753
+          ],
+          "fpr_M": [
+            0.34500101154832347,
+            0.3582735675943906
+          ]
+        }
+      },
+      "control": {
+        "decline_rate": 0.38041039315794606,
+        "default_capture": 0.7391742195367573,
+        "overall_fpr": 0.3489042573889665,
+        "balanced_accuracy": 0.6951349810738954,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.6570878863372882,
+            "tpr": 0.7160364145658263,
+            "fpr": 0.3146344699482553
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.5470635942941653,
+            "tpr": 0.7705073494547179,
+            "fpr": 0.41740929344366645
+          }
+        },
+        "demographic_parity_difference": 0.11002429204312292,
+        "demographic_parity_ratio": 0.8325577227478417,
+        "equalized_odds_difference": 0.10277482349541117,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.37704627491788884,
+            0.38403751097525285
+          ],
+          "default_capture": [
+            0.7276026767647569,
+            0.7509638138542155
+          ],
+          "overall_fpr": [
+            0.34533771216717435,
+            0.35213422619877494
+          ],
+          "balanced_accuracy": [
+            0.6891700942400669,
+            0.7014096820684136
+          ],
+          "dp_difference": [
+            0.10126488320532781,
+            0.11818717300422478
+          ],
+          "dp_ratio": [
+            0.820929115113858,
+            0.8454563288892093
+          ],
+          "eo_difference": [
+            0.09418959531048199,
+            0.11168861711691647
+          ],
+          "approval_rate_F": [
+            0.6528150514294172,
+            0.6613076885128635
+          ],
+          "approval_rate_M": [
+            0.5401459854014599,
+            0.5539812031868708
+          ],
+          "tpr_F": [
+            0.6998939217561319,
+            0.7315809976028029
+          ],
+          "tpr_M": [
+            0.7529989915661897,
+            0.7874457930264714
+          ],
+          "fpr_F": [
+            0.30953815692742354,
+            0.31888056875367465
+          ],
+          "fpr_M": [
+            0.4106625086160272,
+            0.42490593745196414
+          ]
+        },
+        "control_threshold": 0.06687342897158084,
+        "validation_decline_rate": 0.3819775288206696
+      },
+      "paired_difference_mitigated_minus_control": {
+        "point_estimates": {
+          "dp_difference": -0.09827227368137059,
+          "eo_difference": -0.09120675387780602,
+          "balanced_accuracy": -0.007652718257510571,
+          "default_capture": -0.013695871097683776,
+          "overall_fpr": 0.0016095654173373108
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.1020048270122594,
+            -0.09445194529848032
+          ],
+          "eo_difference": [
+            -0.10302187380449034,
+            -0.06301193561199682
+          ],
+          "balanced_accuracy": [
+            -0.011630956435038775,
+            -0.00491205567696441
+          ],
+          "default_capture": [
+            -0.021078101274048112,
+            -0.00845711593631321
+          ],
+          "overall_fpr": [
+            -0.0001462992804616438,
+            0.0035679871433164363
+          ]
+        }
+      }
+    },
+    "gender_demographic_parity": {
+      "sensitive_feature": "gender",
+      "constraint": "demographic_parity",
+      "validation_target_decline_rate": 0.35314872928895463,
+      "control_threshold": 0.07244534322917799,
+      "mitigated": {
+        "decline_rate": 0.35026503203147863,
+        "default_capture": 0.7039274924471299,
+        "overall_fpr": 0.31920689106249006,
+        "balanced_accuracy": 0.69236030069232,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.648947978589576,
+            "tpr": 0.72093837535014,
+            "fpr": 0.32301976913891467
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.651257096512571,
+            "tpr": 0.680891417733523,
+            "fpr": 0.3115849777211967
+          }
+        },
+        "demographic_parity_difference": 0.002309117922995041,
+        "demographic_parity_ratio": 0.9964543681207312,
+        "equalized_odds_difference": 0.04004695761661703,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.34723708172091966,
+            0.3543039250756073
+          ],
+          "default_capture": [
+            0.6881774177271733,
+            0.7172035963234841
+          ],
+          "overall_fpr": [
+            0.3154557503112307,
+            0.3235564931295381
+          ],
+          "balanced_accuracy": [
+            0.6842971831192527,
+            0.6990925739930915
+          ],
+          "dp_difference": [
+            0.00011815091752793161,
+            0.009497344389415028
+          ],
+          "dp_ratio": [
+            0.98551127848251,
+            0.9998173488458305
+          ],
+          "eo_difference": [
+            0.015787725707651863,
+            0.06631695082418075
+          ],
+          "approval_rate_F": [
+            0.6449452406206063,
+            0.6525332379566365
+          ],
+          "approval_rate_M": [
+            0.6452459329230475,
+            0.6571835790277181
+          ],
+          "tpr_F": [
+            0.7037555466878485,
+            0.7364604969744949
+          ],
+          "tpr_M": [
+            0.6598370933043213,
+            0.6988061797752809
+          ],
+          "fpr_F": [
+            0.3189074532768845,
+            0.3274845580838742
+          ],
+          "fpr_M": [
+            0.30570221514442725,
+            0.3179628622427978
+          ]
+        }
+      },
+      "control": {
+        "decline_rate": 0.35205359175311374,
+        "default_capture": 0.71460221550856,
+        "overall_fpr": 0.3202150803898332,
+        "balanced_accuracy": 0.6971935675593633,
+        "auc": 0.7668096293061992,
+        "group_metrics": {
+          "F": {
+            "size": 40541,
+            "approval_rate": 0.6841469130016526,
+            "tpr": 0.6918767507002801,
+            "fpr": 0.28735571182167974
+          },
+          "M": {
+            "size": 20961,
+            "approval_rate": 0.5779304422498927,
+            "tpr": 0.7453769559032717,
+            "fpr": 0.3859007001909612
+          }
+        },
+        "demographic_parity_difference": 0.10621647075176,
+        "demographic_parity_ratio": 0.8447461082799573,
+        "equalized_odds_difference": 0.09854498836928144,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.3481927416994569,
+            0.3561034600500797
+          ],
+          "default_capture": [
+            0.7018252571693183,
+            0.7280153711497317
+          ],
+          "overall_fpr": [
+            0.3161475081041186,
+            0.3249469019595438
+          ],
+          "balanced_accuracy": [
+            0.6890889028874311,
+            0.7037592306751906
+          ],
+          "dp_difference": [
+            0.0985055596472621,
+            0.1132684861535693
+          ],
+          "dp_ratio": [
+            0.8349105314793231,
+            0.8551027249886467
+          ],
+          "eo_difference": [
+            0.09110555852018684,
+            0.1060805460827957
+          ],
+          "approval_rate_F": [
+            0.6796816802742902,
+            0.6885153301595915
+          ],
+          "approval_rate_M": [
+            0.5716318400839655,
+            0.5845641906397596
+          ],
+          "tpr_F": [
+            0.6745688553155889,
+            0.7073500322945261
+          ],
+          "tpr_M": [
+            0.7282950234969737,
+            0.762929808211115
+          ],
+          "fpr_F": [
+            0.28322156684096944,
+            0.2920321549626963
+          ],
+          "fpr_M": [
+            0.3793684838225676,
+            0.39198237431169125
+          ]
+        },
+        "control_threshold": 0.07244534322917799,
+        "validation_decline_rate": 0.35314872928895463
+      },
+      "paired_difference_mitigated_minus_control": {
+        "point_estimates": {
+          "dp_difference": -0.10390735282876495,
+          "eo_difference": -0.05849803075266441,
+          "balanced_accuracy": -0.004833266867043329,
+          "default_capture": -0.010674723061430025,
+          "overall_fpr": -0.0010081893273431453
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.11083439848855636,
+            -0.0898351889238199
+          ],
+          "eo_difference": [
+            -0.08388747201825646,
+            -0.0316498442318824
+          ],
+          "balanced_accuracy": [
+            -0.00753926577933382,
+            -0.0020356587238219447
+          ],
+          "default_capture": [
+            -0.015471250143893245,
+            -0.00547768576517389
+          ],
+          "overall_fpr": [
+            -0.002687832189796692,
+            0.000765064158270449
+          ]
+        }
+      }
+    },
+    "binary_age_equalized_odds": {
+      "sensitive_feature": "binary_age",
+      "constraint": "equalized_odds",
+      "validation_target_decline_rate": 0.3124776430034796,
+      "control_threshold": 0.0814623134604726,
+      "mitigated": {
+        "decline_rate": 0.30910687283547145,
+        "default_capture": 0.6487411883182276,
+        "overall_fpr": 0.27928119141108637,
+        "balanced_accuracy": 0.6847299984535706,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.6864527398589636,
+            "tpr": 0.650032829940906,
+            "fpr": 0.27676905411224345
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.6953806924057668,
+            "tpr": 0.6466909848879625,
+            "fpr": 0.2817230554586676
+          }
+        },
+        "demographic_parity_difference": 0.00892795254680323,
+        "demographic_parity_ratio": 0.9871610577568444,
+        "equalized_odds_difference": 0.004954001346424153,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.30508796318878756,
+            0.3127944978293742
+          ],
+          "default_capture": [
+            0.6358251107140083,
+            0.6616392647144508
+          ],
+          "overall_fpr": [
+            0.27569910369438316,
+            0.2830936622851901
+          ],
+          "balanced_accuracy": [
+            0.6781145180145971,
+            0.6919037621096015
+          ],
+          "dp_difference": [
+            0.0014751797901372272,
+            0.01638083115901007
+          ],
+          "dp_ratio": [
+            0.9764744207244773,
+            0.9978732833452356
+          ],
+          "eo_difference": [
+            0.002967553405851274,
+            0.0329023806579775
+          ],
+          "approval_rate_<median": [
+            0.681142039205538,
+            0.6917674839878373
+          ],
+          "approval_rate_>=median": [
+            0.6892281539115368,
+            0.7006472915100199
+          ],
+          "tpr_<median": [
+            0.6320012233828729,
+            0.6666720464816009
+          ],
+          "tpr_>=median": [
+            0.6256397482957525,
+            0.6716259418137821
+          ],
+          "fpr_<median": [
+            0.27211303745602433,
+            0.28202254062019205
+          ],
+          "fpr_>=median": [
+            0.2767925884002119,
+            0.28687499858746435
+          ]
+        }
+      },
+      "control": {
+        "decline_rate": 0.3104889192397119,
+        "default_capture": 0.6731117824773414,
+        "overall_fpr": 0.27864445151933215,
+        "balanced_accuracy": 0.6972336654790046,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.6082357507925211,
+            "tpr": 0.7396585686145765,
+            "fpr": 0.35373905554758145
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.7716499395207428,
+            "tpr": 0.5674830640958832,
+            "fpr": 0.20565050575514476
+          }
+        },
+        "demographic_parity_difference": 0.16341418872822167,
+        "demographic_parity_ratio": 0.788227562319625,
+        "equalized_odds_difference": 0.17217550451869323,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.30699315480545664,
+            0.31429686356763087
+          ],
+          "default_capture": [
+            0.6596525073648601,
+            0.6881491177627795
+          ],
+          "overall_fpr": [
+            0.27539495255201535,
+            0.2823117947162959
+          ],
+          "balanced_accuracy": [
+            0.6902088898597031,
+            0.7042549708979946
+          ],
+          "dp_difference": [
+            0.1558507862770856,
+            0.1702770732350699
+          ],
+          "dp_ratio": [
+            0.7799387774952726,
+            0.7977055248963132
+          ],
+          "eo_difference": [
+            0.1492639622831007,
+            0.19724482750267683
+          ],
+          "approval_rate_<median": [
+            0.6025304069353691,
+            0.6136944426473443
+          ],
+          "approval_rate_>=median": [
+            0.766418483768675,
+            0.7759733891268102
+          ],
+          "tpr_<median": [
+            0.7231242089690088,
+            0.7554731905748765
+          ],
+          "tpr_>=median": [
+            0.5485923572170086,
+            0.5881973889918874
+          ],
+          "fpr_<median": [
+            0.348337000960447,
+            0.35952752997274695
+          ],
+          "fpr_>=median": [
+            0.20098422310926356,
+            0.21034564659631413
+          ]
+        },
+        "control_threshold": 0.0814623134604726,
+        "validation_decline_rate": 0.3124776430034796
+      },
+      "paired_difference_mitigated_minus_control": {
+        "point_estimates": {
+          "dp_difference": -0.15448623618141843,
+          "eo_difference": -0.16722150317226908,
+          "balanced_accuracy": -0.012503667025433929,
+          "default_capture": -0.0243705941591138,
+          "overall_fpr": 0.0006367398917542233
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.15846546144038706,
+            -0.15052850647097668
+          ],
+          "eo_difference": [
+            -0.1775609401849597,
+            -0.12822557581115643
+          ],
+          "balanced_accuracy": [
+            -0.016335825851062125,
+            -0.008145950196637233
+          ],
+          "default_capture": [
+            -0.031610826743581816,
+            -0.015828146939624577
+          ],
+          "overall_fpr": [
+            -0.0021068870128297416,
+            0.002852888841410631
+          ]
+        }
+      }
+    },
+    "binary_age_demographic_parity": {
+      "sensitive_feature": "binary_age",
+      "constraint": "demographic_parity",
+      "validation_target_decline_rate": 0.33943611589866995,
+      "control_threshold": 0.0752639057642483,
+      "mitigated": {
+        "decline_rate": 0.33686161650651186,
+        "default_capture": 0.6845921450151058,
+        "overall_fpr": 0.30632494959142526,
+        "balanced_accuracy": 0.6891335977118402,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.6652972763149383,
+            "tpr": 0.6894287590282338,
+            "fpr": 0.29593081670733457
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.6609565530092517,
+            "tpr": 0.6769150599270454,
+            "fpr": 0.316428322288106
+          }
+        },
+        "demographic_parity_difference": 0.004340723305686578,
+        "demographic_parity_ratio": 0.9934755131875337,
+        "equalized_odds_difference": 0.020497505580771458,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.333251223517552,
+            0.34063622912703445
+          ],
+          "default_capture": [
+            0.6724850458918955,
+            0.6977741065607775
+          ],
+          "overall_fpr": [
+            0.3025204706360592,
+            0.3101498774996256
+          ],
+          "balanced_accuracy": [
+            0.6837591415434047,
+            0.695915054627386
+          ],
+          "dp_difference": [
+            0.00044828824854202255,
+            0.011462862123212908
+          ],
+          "dp_ratio": [
+            0.9828627217963689,
+            0.9993262295336565
+          ],
+          "eo_difference": [
+            0.012766988169377935,
+            0.0394672298372542
+          ],
+          "approval_rate_<median": [
+            0.6597593323413341,
+            0.6710244549395096
+          ],
+          "approval_rate_>=median": [
+            0.6564394063225343,
+            0.6658668148680899
+          ],
+          "tpr_<median": [
+            0.6747101856532822,
+            0.7034208651917319
+          ],
+          "tpr_>=median": [
+            0.6574028853554031,
+            0.6981741573033708
+          ],
+          "fpr_<median": [
+            0.29018747268154205,
+            0.30175289491148966
+          ],
+          "fpr_>=median": [
+            0.31062611359314907,
+            0.3208210577088343
+          ]
+        }
+      },
+      "control": {
+        "decline_rate": 0.3376583256101328,
+        "default_capture": 0.7007049345417925,
+        "overall_fpr": 0.305776645795748,
+        "balanced_accuracy": 0.6974641443730223,
+        "auc": 0.7668099206739796,
+        "group_metrics": {
+          "<median": {
+            "size": 30914,
+            "approval_rate": 0.5787669017273727,
+            "tpr": 0.7672357189757059,
+            "fpr": 0.3834146691545859
+          },
+          ">=median": {
+            "size": 30589,
+            "approval_rate": 0.7468044068129066,
+            "tpr": 0.5951016154247004,
+            "fpr": 0.2303104290198814
+          }
+        },
+        "demographic_parity_difference": 0.16803750508553394,
+        "demographic_parity_ratio": 0.7749912781009719,
+        "equalized_odds_difference": 0.17213410355100545,
+        "confidence_intervals_95": {
+          "decline_rate": [
+            0.33375567045509974,
+            0.34153212038437153
+          ],
+          "default_capture": [
+            0.6898042562545095,
+            0.7133865881966147
+          ],
+          "overall_fpr": [
+            0.30156229313986876,
+            0.3095224997250791
+          ],
+          "balanced_accuracy": [
+            0.6913560112778885,
+            0.7043670982508441
+          ],
+          "dp_difference": [
+            0.1615011350875897,
+            0.17530166045276316
+          ],
+          "dp_ratio": [
+            0.7657406136829202,
+            0.7831193824416502
+          ],
+          "eo_difference": [
+            0.15226399889807068,
+            0.19963042845334034
+          ],
+          "approval_rate_<median": [
+            0.5727154363718704,
+            0.5841050980138448
+          ],
+          "approval_rate_>=median": [
+            0.7430375298309849,
+            0.7520750923534604
+          ],
+          "tpr_<median": [
+            0.7537817721418691,
+            0.7796262953137241
+          ],
+          "tpr_>=median": [
+            0.5752199878705561,
+            0.6181422260355753
+          ],
+          "fpr_<median": [
+            0.37738692429413845,
+            0.3900952956834892
+          ],
+          "fpr_>=median": [
+            0.22476230225267027,
+            0.23442758375090708
+          ]
+        },
+        "control_threshold": 0.0752639057642483,
+        "validation_decline_rate": 0.33943611589866995
+      },
+      "paired_difference_mitigated_minus_control": {
+        "point_estimates": {
+          "dp_difference": -0.16369678177984737,
+          "eo_difference": -0.151636597970234,
+          "balanced_accuracy": -0.008330546661182048,
+          "default_capture": -0.01611278952668671,
+          "overall_fpr": 0.000548303795677274
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.17352973596246235,
+            -0.15113207689313488
+          ],
+          "eo_difference": [
+            -0.17031559363336696,
+            -0.12883618855905074
+          ],
+          "balanced_accuracy": [
+            -0.012458224189257308,
+            -0.004601695784157325
+          ],
+          "default_capture": [
+            -0.02334956230914968,
+            -0.008795287581813582
+          ],
+          "overall_fpr": [
+            -0.0019287682586332593,
+            0.0025541092010881164
+          ]
+        }
+      }
+    }
+  }
+}
