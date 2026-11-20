@@ -1,12 +1,15 @@
 # ---- Data & models (large / generated) ----
 /data/
 /models/
+*.csv
+*.parquet
 
 # ---- Reports: only predictions are ignored ----
 reports/predictions/
 
 # ---- Scratch / temporary scripts ----
 scratch/
+scratch_compare/
 
 # ---- Python ----
 __pycache__/

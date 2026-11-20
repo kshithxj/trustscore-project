@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "timestamp": "2026-11-20T09:24:55Z",
+    "total_runtime_seconds": 322.28066515922546,
+    "step_runtimes_seconds": {
+      "phase1_data": 5.827886581420898,
+      "phase2_model_a": 30.95567297935486,
+      "phase3_model_b": 48.558541774749756,
+      "phase4_fairness_proxy": 167.76912236213684,
+      "phase5_shap_mitigation": 33.00337624549866,
+      "phase5b_matched_control": 35.10997176170349,
+      "phase6_reports_figures": 1.0097777843475342
+    },
+    "overall_max_numeric_difference": 0.0,
+    "tolerance": 1e-09,
+    "reproducibility_status": "PASS",
+    "environment": {
+      "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "packages": {
+        "numpy": "2.5.5",
+        "pandas": "3.1.1",
+        "scikit-learn": "1.9.1",
+        "xgboost": "3.4.1",
+        "fairlearn": "0.15.0",
+        "shap": "0.54.1",
+        "matplotlib": "3.11.2"
+      }
+    }
+  },
+  "per_file_max_absolute_difference": {
+    "reports/metrics/a_vs_b.json": 0.0,
+    "reports/metrics/fairness.json": 0.0,
+    "reports/metrics/mitigation.json": 0.0,
+    "reports/metrics/mitigation_control.json": 0.0,
+    "reports/metrics/model_a.json": 0.0,
+    "reports/metrics/model_a_bureau_missingness.json": 0.0,
+    "reports/metrics/model_a_feature_gain.csv": 0.0,
+    "reports/metrics/model_b.json": 0.0,
+    "reports/metrics/model_b_checks.json": 0.0,
+    "reports/metrics/model_b_feature_gain.csv": 0.0,
+    "reports/metrics/phase1_audit.json": 0.0,
+    "reports/metrics/proxy.json": 0.0,
+    "reports/metrics/raw_data_check.json": 0.0,
+    "reports/metrics/shap_summary.json": 0.0,
+    "reports/tables/base_rates.csv": 0.0,
+    "reports/tables/fairness_by_decline_rate.csv": 0.0,
+    "reports/tables/fairness_gaps.csv": 0.0,
+    "reports/tables/shap_sample_ids.csv": 0.0,
+    "reports/tables/tradeoff.csv": 0.0,
+    "reports/tables/tradeoff_matched.csv": 0.0
+  }
+}

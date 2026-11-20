@@ -1,91 +1,95 @@
-# Home Credit Default Risk – Fairness-Aware Credit Scoring
+# TrustScore: Fairness-Aware Credit Scoring on Home Credit Default Risk
 
-A machine-learning pipeline for predicting loan default on the
-[Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk)
-dataset, with an emphasis on **model fairness**, **explainability**, and
-**threshold optimisation**.
+A reproducible, fairness-audited credit scoring pipeline evaluating whether behavioral lender-history improves default prediction over traditional bureau-style underwriting, how benefits distribute across credit segments (`full_file`, `thin_file`, `no_file`), and how group fairness tradeoffs behave under threshold mitigation.
 
-## Quick Start
+---
+
+## 1. Quick Start & One-Command Reproduction
+
+To reproduce all results, metrics, figures, and tables from raw data from scratch:
 
 ```bash
-# 1. Clone the repo
-git clone <repo-url> && cd miniproject
-
-# 2. Create a virtual environment (Python 3.10+)
-python -m venv venv
+# 1. Activate environment
 venv\Scripts\activate        # Windows
-# source venv/bin/activate   # macOS / Linux
+# source venv/bin/activate   # Linux / macOS
 
-# 3. Install dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
+# 2. Run the complete pipeline end-to-end
+python -m src.run_all
 
-# 4. Run the smoke tests
-pytest tests/ -v
+# Optional: skip SHAP computation for a faster smoke run
+python -m src.run_all --skip-shap
+
+# 3. Run the full test suite
+pytest -v
 ```
 
-## Where to Place the Kaggle Data
+---
 
-Download the CSVs from the
-[Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)
-competition page and place them **unzipped** in:
+## 2. Dataset Source & Setup
 
-```
-data/raw/home_credit/
-├── application_train.csv
-├── application_test.csv
-├── bureau.csv
-├── bureau_balance.csv
-├── credit_card_balance.csv
-├── installments_payments.csv
-├── POS_CASH_balance.csv
-└── previous_application.csv
-```
+- **Dataset Source**: [Kaggle Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)
+- **Download Date**: TODO: add date
+- **Placement**: Place the unzipped raw CSV files into `data/raw/home_credit/`:
+  ```
+  data/raw/home_credit/
+  ├── application_train.csv
+  ├── application_test.csv
+  ├── bureau.csv
+  ├── bureau_balance.csv
+  ├── credit_card_balance.csv
+  ├── installments_payments.csv
+  ├── POS_CASH_balance.csv
+  └── previous_application.csv
+  ```
+  *(Note: All data files, models, and predictions are strictly git-ignored).*
 
-> The `data/` folder is git-ignored; you must download the files yourself.
+---
 
-## Folder Layout
+## 3. Key Documentation & Reports
+
+- **Results Summary**: [reports/results_summary.md](reports/results_summary.md) — Comprehensive numeric breakdown across all 7 study dimensions.
+- **Results Note**: [reports/results_note.md](reports/results_note.md) — One-page synthesis answering the three core project research questions.
+- **Project Limitations**: [docs/limitations.md](docs/limitations.md) — Plain-language discussion of institutional, legal, and statistical limitations.
+- **Data Dictionary**: [docs/data_dictionary.md](docs/data_dictionary.md) — Definitions of all base and engineered features.
+- **Reproducibility Audit**: [reports/metrics/reproducibility_check.json](reports/metrics/reproducibility_check.json) — Exact numeric diffs ($\le 10^{-9}$) across reruns.
+
+---
+
+## 4. Repository Layout
 
 ```
 miniproject/
 ├── configs/
-│   └── config.yaml            # master configuration
-├── data/
-│   ├── raw/home_credit/       # original Kaggle CSVs (git-ignored)
-│   ├── processed/             # cleaned / engineered data
-│   └── splits/                # train / valid / test splits
-├── src/
-│   ├── data/                  # data loading & preprocessing
-│   ├── features/              # feature engineering
-│   ├── models/                # model training & evaluation
-│   ├── fairness/              # fairness audits & mitigation
-│   ├── explain/               # SHAP / explainability
-│   └── utils.py               # shared helpers (load_config, set_seed)
+│   ├── config.yaml               # Master pipeline config (seeds, splits, paths)
+│   └── model_params.yaml         # XGBoost hyperparameters
+├── data/                         # [Git-ignored] Raw, processed, and split files
+│   ├── raw/home_credit/          # Unzipped Kaggle CSV tables
+│   ├── processed/                # applicant_base, eval_attrs, behavioral_features
+│   └── splits/                   # train_ids, valid_ids, test_ids (60/20/20 stratified)
+├── docs/
+│   ├── PROJECT_CONTEXT.md        # Technical architecture and problem statement
+│   ├── data_dictionary.md        # Feature schemas and descriptions
+│   └── limitations.md            # Plain-language project limitations
+├── models/                       # [Git-ignored] Serialized model artifacts
+│   ├── model_a.json              # Bureau baseline XGBoost model
+│   └── model_b.json              # TrustScore behavioral XGBoost model
 ├── reports/
-│   ├── metrics/               # JSON / CSV evaluation results
-│   ├── figures/               # plots (PNG, PDF)
-│   └── predictions/           # submission files (git-ignored)
-├── notebooks/                 # exploratory / presentation notebooks
-├── tests/                     # pytest test suite
-├── docs/                      # project documentation
-├── requirements.txt           # pinned dependencies (Python 3.10)
-├── .gitignore
-└── README.md
+│   ├── figures/                  # 300 DPI figures (AUC, fairness gaps, SHAP, mitigation)
+│   ├── metrics/                  # JSON performance, fairness, and audit artifacts
+│   ├── tables/                   # CSV result tables and matched tradeoff tables
+│   ├── results_summary.md        # 7-section comprehensive study summary
+│   ├── results_note.md           # 3-question executive summary with TODO lines
+│   └── shap_notes.md             # Local explanations and proxy leakage analysis
+├── src/
+│   ├── data/                     # Ingestion, validation guards, and splitting
+│   ├── features/                 # Bureau and behavioral feature engineering
+│   ├── models/                   # Training pipelines for Model A and Model B
+│   ├── fairness/                 # Decision policies, audits, proxy tests, mitigation
+│   ├── explainability/           # TreeSHAP computation and figure generation
+│   ├── make_summary.py           # Generator for reports/results_summary.md
+│   ├── make_figures.py           # Publication figure generator
+│   ├── make_note.py              # Generator for reports/results_note.md
+│   ├── run_all.py                # Master one-command reproduction runner
+│   └── utils.py                  # Seed and YAML config helpers
+└── tests/                        # Comprehensive pytest test suite (Phases 1-6)
 ```
-
-## Configuration
-
-All tuneable parameters live in [`configs/config.yaml`](configs/config.yaml):
-seed, split ratios, decline rate, bootstrap iterations, and folder paths.
-
-## Project Phases
-
-| Phase | Description |
-|-------|-------------|
-| 0 | Project setup (this phase) |
-| 1 | Data audit, segment analysis, train/valid/test split |
-| 2 | Model A – baseline classifier |
-| 3 | Behavioural features + Model B |
-| 4 | Fairness audit + proxy-leakage test |
-| 5 | SHAP explanations + ThresholdOptimizer |
-| 6 | Results freeze, final report, poster v2 |
