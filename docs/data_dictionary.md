@@ -140,6 +140,63 @@ three variants: `_AVG`, `_MODE`, `_MEDI`. All are `float64`, high missingness
 | `has_lender_history` | bool | ≥ 1 record in any of previous_application, installments_payments, POS_CASH_balance, credit_card_balance | Derived (lender tables) |
 | `segment` | str | `full_file` / `thin_file` / `no_file` | Derived |
 
+### Bureau Features (Model A & B)
+
+Aggregated per applicant from `bureau.csv`.
+
+| Column | Type | Meaning | Formula / Source |
+|--------|------|---------|------------------|
+| `bureau_n_credits` | float64 | Total number of bureau records | `count()` of bureau rows |
+| `bureau_n_active` | float64 | Number of active credits | `sum(CREDIT_ACTIVE == "Active")` |
+| `bureau_days_since_first_credit` | float64 | Days since earliest credit opened | `-min(DAYS_CREDIT)` |
+| `bureau_days_since_last_credit` | float64 | Days since most recent credit opened | `-max(DAYS_CREDIT)` |
+| `bureau_total_overdue` | float64 | Total credit sum currently overdue | `sum(AMT_CREDIT_SUM_OVERDUE)` (NA -> 0) |
+| `bureau_total_debt` | float64 | Total current debt across bureau credits | `sum(AMT_CREDIT_SUM_DEBT)` (NA -> 0) |
+
+### Behavioral Lender-History Features (Model B)
+
+Aggregated per applicant from lender history tables before joining. Unlinked applicants remain NaN.
+
+#### From `previous_application.csv`
+
+| Column | Type | Meaning | Formula / Source |
+|--------|------|---------|------------------|
+| `prev_n_apps` | float64 | Total past loan applications with Home Credit | `count()` of application rows |
+| `prev_approved_rate` | float64 | Approval rate for previous applications | `mean(NAME_CONTRACT_STATUS == "Approved")` |
+| `prev_refused_rate` | float64 | Refusal rate for previous applications | `mean(NAME_CONTRACT_STATUS == "Refused")` |
+| `prev_mean_amt_credit` | float64 | Average credit amount of past applications | `mean(AMT_CREDIT)` |
+| `prev_mean_amt_annuity` | float64 | Average annuity of past applications | `mean(AMT_ANNUITY)` |
+| `prev_n_apps_last_365d` | float64 | Number of applications in the last 365 days | `sum(DAYS_DECISION >= -365)` |
+
+#### From `installments_payments.csv`
+
+| Column | Type | Meaning | Formula / Source |
+|--------|------|---------|------------------|
+| `inst_days_late_mean` | float64 | Mean payment delay in days (positive = late) | `mean(DAYS_ENTRY_PAYMENT - DAYS_INSTALMENT)` where entry not NaN |
+| `inst_days_late_max` | float64 | Maximum payment delay in days | `max(DAYS_ENTRY_PAYMENT - DAYS_INSTALMENT)` |
+| `inst_days_late_std` | float64 | Sample standard deviation of payment delays | `std(DAYS_ENTRY_PAYMENT - DAYS_INSTALMENT)` |
+| `inst_frac_late` | float64 | Fraction of installments paid past due date | `mean(days_late > 0)` |
+| `inst_frac_early` | float64 | Fraction of installments paid strictly ahead of due date | `mean(days_late < 0)` |
+| `inst_payment_ratio_mean` | float64 | Mean payment-to-due ratio (per-row approximation) | `mean(AMT_PAYMENT / AMT_INSTALMENT)` for rows with `AMT_INSTALMENT > 0` |
+
+#### From `POS_CASH_balance.csv`
+
+| Column | Type | Meaning | Formula / Source |
+|--------|------|---------|------------------|
+| `pos_n_records` | float64 | Total monthly snapshot records for POS/cash loans | `count()` of monthly records |
+| `pos_dpd_mean` | float64 | Average days past due across monthly snapshots | `mean(SK_DPD)` |
+| `pos_dpd_max` | float64 | Maximum days past due observed across monthly snapshots | `max(SK_DPD)` |
+| `pos_months_with_dpd` | float64 | Number of monthly snapshots with days past due > 0 | `sum(SK_DPD > 0)` |
+
+#### From `credit_card_balance.csv`
+
+| Column | Type | Meaning | Formula / Source |
+|--------|------|---------|------------------|
+| `cc_n_records` | float64 | Total monthly snapshot records for revolving cards | `count()` of monthly records |
+| `cc_util_mean` | float64 | Average credit card credit utilization | `mean(AMT_BALANCE / AMT_CREDIT_LIMIT_ACTUAL)` where limit > 0 |
+| `cc_util_max` | float64 | Peak credit card credit utilization observed | `max(AMT_BALANCE / AMT_CREDIT_LIMIT_ACTUAL)` where limit > 0 |
+| `cc_months_with_dpd` | float64 | Number of monthly snapshots with card DPD > 0 | `sum(SK_DPD > 0)` |
+
 ---
 
 ## `eval_attrs.parquet`

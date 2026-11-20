@@ -1,0 +1,131 @@
+{
+  "time_sign_check": {
+    "previous_application_DAYS_DECISION": 0,
+    "installments_payments_DAYS_INSTALMENT": 0,
+    "installments_payments_DAYS_ENTRY_PAYMENT": 0,
+    "POS_CASH_balance_MONTHS_BALANCE": 0,
+    "credit_card_balance_MONTHS_BALANCE": 0
+  },
+  "segment_consistency": {
+    "no_file_violations": 0,
+    "thin_file_violations": 0
+  },
+  "cc_utilization": {
+    "min": -1.7999999523162842,
+    "max": 11.777510643005371
+  },
+  "missingness_by_segment": {
+    "full_file": {
+      "previous_application": {
+        "prev_n_apps": 0.053072,
+        "prev_approved_rate": 0.053072,
+        "prev_refused_rate": 0.053072,
+        "prev_mean_amt_credit": 0.053072,
+        "prev_mean_amt_annuity": 0.054522,
+        "prev_n_apps_last_365d": 0.053072
+      },
+      "installments_payments": {
+        "inst_days_late_mean": 0.051212,
+        "inst_days_late_max": 0.051212,
+        "inst_days_late_std": 0.053463,
+        "inst_frac_late": 0.051212,
+        "inst_frac_early": 0.051212,
+        "inst_payment_ratio_mean": 0.05122
+      },
+      "POS_CASH_balance": {
+        "pos_n_records": 0.057922,
+        "pos_dpd_mean": 0.057922,
+        "pos_dpd_max": 0.057922,
+        "pos_months_with_dpd": 0.057922
+      },
+      "credit_card_balance": {
+        "cc_n_records": 0.714529,
+        "cc_util_mean": 0.717292,
+        "cc_util_max": 0.717292,
+        "cc_months_with_dpd": 0.714529
+      }
+    },
+    "thin_file": {
+      "previous_application": {
+        "prev_n_apps": 0.006456,
+        "prev_approved_rate": 0.006456,
+        "prev_refused_rate": 0.006456,
+        "prev_mean_amt_credit": 0.006456,
+        "prev_mean_amt_annuity": 0.007293,
+        "prev_n_apps_last_365d": 0.006456
+      },
+      "installments_payments": {
+        "inst_days_late_mean": 0.004352,
+        "inst_days_late_max": 0.004352,
+        "inst_days_late_std": 0.006624,
+        "inst_frac_late": 0.004352,
+        "inst_frac_early": 0.004352,
+        "inst_payment_ratio_mean": 0.004376
+      },
+      "POS_CASH_balance": {
+        "pos_n_records": 0.014467,
+        "pos_dpd_mean": 0.014467,
+        "pos_dpd_max": 0.014467,
+        "pos_months_with_dpd": 0.014467
+      },
+      "credit_card_balance": {
+        "cc_n_records": 0.720564,
+        "cc_util_mean": 0.723936,
+        "cc_util_max": 0.723936,
+        "cc_months_with_dpd": 0.720564
+      }
+    },
+    "no_file": {
+      "previous_application": {
+        "prev_n_apps": 1.0,
+        "prev_approved_rate": 1.0,
+        "prev_refused_rate": 1.0,
+        "prev_mean_amt_credit": 1.0,
+        "prev_mean_amt_annuity": 1.0,
+        "prev_n_apps_last_365d": 1.0
+      },
+      "installments_payments": {
+        "inst_days_late_mean": 1.0,
+        "inst_days_late_max": 1.0,
+        "inst_days_late_std": 1.0,
+        "inst_frac_late": 1.0,
+        "inst_frac_early": 1.0,
+        "inst_payment_ratio_mean": 1.0
+      },
+      "POS_CASH_balance": {
+        "pos_n_records": 1.0,
+        "pos_dpd_mean": 1.0,
+        "pos_dpd_max": 1.0,
+        "pos_months_with_dpd": 1.0
+      },
+      "credit_card_balance": {
+        "cc_n_records": 1.0,
+        "cc_util_mean": 1.0,
+        "cc_util_max": 1.0,
+        "cc_months_with_dpd": 1.0
+      }
+    }
+  },
+  "join_checks": {
+    "previous_application": {
+      "rows_before": 307511,
+      "rows_after": 307511,
+      "duplicated_sk_id_curr": 0
+    },
+    "installments_payments": {
+      "rows_before": 307511,
+      "rows_after": 307511,
+      "duplicated_sk_id_curr": 0
+    },
+    "POS_CASH_balance": {
+      "rows_before": 307511,
+      "rows_after": 307511,
+      "duplicated_sk_id_curr": 0
+    },
+    "credit_card_balance": {
+      "rows_before": 307511,
+      "rows_after": 307511,
+      "duplicated_sk_id_curr": 0
+    }
+  }
+}

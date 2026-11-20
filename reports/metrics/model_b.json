@@ -1,0 +1,171 @@
+{
+  "model_name": "Model B (Lender-History Behavioral)",
+  "versions": {
+    "xgboost": "3.4.1",
+    "pandas": "3.1.1"
+  },
+  "parameters": {
+    "objective": "binary:logistic",
+    "eval_metric": "auc",
+    "tree_method": "hist",
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "n_estimators": 2000,
+    "early_stopping_rounds": 50,
+    "enable_categorical": true
+  },
+  "parameters_identical_to_model_a": true,
+  "early_stopping": {
+    "rounds": 50,
+    "set_in": "constructor",
+    "best_iteration": 297
+  },
+  "training_time_seconds": 23.02,
+  "feature_count": 144,
+  "validation_auc_overall": 0.760932,
+  "test_results": {
+    "overall": {
+      "applicants": 61503,
+      "positives": 4965,
+      "auc": 0.76681,
+      "ci_95_lower": 0.759674,
+      "ci_95_upper": 0.773116,
+      "skipped_resamples": 0
+    },
+    "by_segment": {
+      "full_file": {
+        "applicants": 52699,
+        "positives": 4074,
+        "auc": 0.767157,
+        "ci_95_lower": 0.759294,
+        "ci_95_upper": 0.774797,
+        "low_precision": false,
+        "skipped_resamples": 0
+      },
+      "thin_file": {
+        "applicants": 8364,
+        "positives": 860,
+        "auc": 0.75532,
+        "ci_95_lower": 0.739041,
+        "ci_95_upper": 0.772823,
+        "low_precision": false,
+        "skipped_resamples": 0
+      },
+      "no_file": {
+        "applicants": 440,
+        "positives": 31,
+        "auc": 0.836659,
+        "ci_95_lower": 0.771039,
+        "ci_95_upper": 0.894991,
+        "low_precision": true,
+        "skipped_resamples": 0
+      }
+    }
+  },
+  "bootstrap_settings": {
+    "n_bootstraps": 200,
+    "seed": 42,
+    "confidence_level": 0.95,
+    "total_skipped_resamples_all": 0
+  },
+  "sanity_guards": {
+    "score_range": [
+      0.0014293185668066144,
+      0.8092451691627502
+    ],
+    "nan_count_val": 0,
+    "nan_count_test": 0,
+    "id_coverage_valid_exact": true,
+    "id_coverage_test_exact": true,
+    "auc_bug_guard_passed": true
+  },
+  "importance": {
+    "top_20_features_by_gain": [
+      {
+        "feature": "EXT_SOURCE_2",
+        "gain": 66.8017349243164
+      },
+      {
+        "feature": "EXT_SOURCE_3",
+        "gain": 63.74983215332031
+      },
+      {
+        "feature": "NAME_EDUCATION_TYPE",
+        "gain": 30.094318389892578
+      },
+      {
+        "feature": "FLAG_DOCUMENT_3",
+        "gain": 24.76511573791504
+      },
+      {
+        "feature": "EXT_SOURCE_1",
+        "gain": 24.652929306030273
+      },
+      {
+        "feature": "cc_util_mean",
+        "gain": 20.64615821838379
+      },
+      {
+        "feature": "NAME_CONTRACT_TYPE",
+        "gain": 19.765684127807617
+      },
+      {
+        "feature": "inst_frac_late",
+        "gain": 19.17851448059082
+      },
+      {
+        "feature": "prev_refused_rate",
+        "gain": 17.882009506225586
+      },
+      {
+        "feature": "DAYS_EMPLOYED",
+        "gain": 17.69475746154785
+      },
+      {
+        "feature": "FLOORSMAX_MEDI",
+        "gain": 16.82742691040039
+      },
+      {
+        "feature": "AMT_GOODS_PRICE",
+        "gain": 16.30992317199707
+      },
+      {
+        "feature": "prev_approved_rate",
+        "gain": 15.791491508483887
+      },
+      {
+        "feature": "NAME_INCOME_TYPE",
+        "gain": 15.461614608764648
+      },
+      {
+        "feature": "ELEVATORS_MEDI",
+        "gain": 15.002366065979004
+      },
+      {
+        "feature": "ORGANIZATION_TYPE",
+        "gain": 14.862200736999512
+      },
+      {
+        "feature": "REGION_RATING_CLIENT_W_CITY",
+        "gain": 14.56402587890625
+      },
+      {
+        "feature": "cc_util_max",
+        "gain": 14.300602912902832
+      },
+      {
+        "feature": "DEF_30_CNT_SOCIAL_CIRCLE",
+        "gain": 14.28882122039795
+      },
+      {
+        "feature": "pos_n_records",
+        "gain": 14.221907615661621
+      }
+    ],
+    "total_gain_all": 1465.755777835846,
+    "total_gain_behavioral": 238.63653659820557,
+    "behavioral_gain_share": 0.162808
+  }
+}
