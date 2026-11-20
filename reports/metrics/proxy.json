@@ -1,0 +1,129 @@
+{
+  "fixed_model_parameters": {
+    "tree_method": "hist",
+    "n_estimators": 200,
+    "learning_rate": 0.1,
+    "max_depth": 4,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "enable_categorical": true
+  },
+  "train_median_age": 43.12,
+  "interpretation_notes": "An AUC near 0.5 means little leakage; a clearly higher AUC for S3 than S1 means the behavioral features add proxy information; S1 may already predict gender or age through legitimate fields such as occupation and employment.",
+  "targets": {
+    "gender": {
+      "positive_label": "Female (F)",
+      "n_samples": 307507,
+      "prevalence": 0.658352,
+      "majority_class_accuracy": 0.658352,
+      "auc_baseline": 0.5,
+      "feature_sets": {
+        "S1": {
+          "description": "Application features only (118 features)",
+          "n_features": 118,
+          "mean_auc": 0.896106,
+          "std_auc": 0.001194,
+          "runtime_seconds": 35.1
+        },
+        "S2": {
+          "description": "Behavioral features only (20 features)",
+          "n_features": 20,
+          "mean_auc": 0.574897,
+          "std_auc": 0.001472,
+          "runtime_seconds": 7.1
+        },
+        "S3": {
+          "description": "Combined application + behavioral (138 features)",
+          "n_features": 138,
+          "mean_auc": 0.897357,
+          "std_auc": 0.001378,
+          "runtime_seconds": 39.2
+        }
+      },
+      "best_feature_set": "S3",
+      "top_5_features_by_gain_for_best_set": {
+        "feature_set": "S3",
+        "fit_method": "fit once on full data for ranking only",
+        "top_5": [
+          {
+            "feature": "FLAG_OWN_CAR",
+            "gain": 3427.6174
+          },
+          {
+            "feature": "OCCUPATION_TYPE",
+            "gain": 877.5013
+          },
+          {
+            "feature": "FLAG_DOCUMENT_8",
+            "gain": 769.7946
+          },
+          {
+            "feature": "OWN_CAR_AGE",
+            "gain": 619.3474
+          },
+          {
+            "feature": "REG_CITY_NOT_WORK_CITY",
+            "gain": 231.9569
+          }
+        ]
+      }
+    },
+    "binary_age": {
+      "positive_label": "Age >= 43.12",
+      "n_samples": 307511,
+      "prevalence": 0.500184,
+      "majority_class_accuracy": 0.500184,
+      "auc_baseline": 0.5,
+      "feature_sets": {
+        "S1": {
+          "description": "Application features only (118 features)",
+          "n_features": 118,
+          "mean_auc": 0.932473,
+          "std_auc": 0.000654,
+          "runtime_seconds": 33.7
+        },
+        "S2": {
+          "description": "Behavioral features only (20 features)",
+          "n_features": 20,
+          "mean_auc": 0.636443,
+          "std_auc": 0.001953,
+          "runtime_seconds": 7.7
+        },
+        "S3": {
+          "description": "Combined application + behavioral (138 features)",
+          "n_features": 138,
+          "mean_auc": 0.93422,
+          "std_auc": 0.000743,
+          "runtime_seconds": 36.8
+        }
+      },
+      "best_feature_set": "S3",
+      "top_5_features_by_gain_for_best_set": {
+        "feature_set": "S3",
+        "fit_method": "fit once on full data for ranking only",
+        "top_5": [
+          {
+            "feature": "NAME_INCOME_TYPE",
+            "gain": 10901.6934
+          },
+          {
+            "feature": "DAYS_EMPLOYED",
+            "gain": 1831.4572
+          },
+          {
+            "feature": "CNT_CHILDREN",
+            "gain": 927.2372
+          },
+          {
+            "feature": "EXT_SOURCE_1",
+            "gain": 549.293
+          },
+          {
+            "feature": "NAME_HOUSING_TYPE",
+            "gain": 442.6125
+          }
+        ]
+      }
+    }
+  }
+}

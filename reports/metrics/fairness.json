@@ -1,0 +1,667 @@
+{
+  "policy": {
+    "decline_rate_target": 0.15,
+    "threshold_a": 0.143708,
+    "threshold_b": 0.144659,
+    "realized_test_decline_a": 0.149798,
+    "realized_test_decline_b": 0.148155,
+    "train_median_age": 43.12,
+    "test_xna_count": 1
+  },
+  "conventions": {
+    "fairlearn_version": "0.15.0",
+    "functions_used": [
+      "demographic_parity_difference",
+      "demographic_parity_ratio",
+      "equalized_odds_difference"
+    ],
+    "multigroup_convention": "between_groups (worst_case difference/ratio across all groups)",
+    "cross_check_passed": true
+  },
+  "overall": {
+    "gender": {
+      "groups": [
+        "F",
+        "M"
+      ],
+      "unreliable_groups": [],
+      "skipped_bootstrap_resamples": 0,
+      "model_a": {
+        "group_metrics": {
+          "F": {
+            "n": 40541,
+            "n_positives": 2856,
+            "n_negatives": 37685,
+            "approval_rate": 0.875114,
+            "tpr": 0.391457,
+            "fpr": 0.104684,
+            "fnr": 0.608543,
+            "unreliable": false
+          },
+          "M": {
+            "n": 20961,
+            "n_positives": 2109,
+            "n_negatives": 18852,
+            "approval_rate": 0.802013,
+            "tpr": 0.472262,
+            "fpr": 0.167303,
+            "fnr": 0.527738,
+            "unreliable": false
+          }
+        },
+        "gaps": {
+          "dp_difference": 0.073101,
+          "dp_ratio": 0.916467,
+          "eo_difference": 0.080805
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            0.067153,
+            0.078832
+          ],
+          "dp_ratio": [
+            0.910006,
+            0.923275
+          ],
+          "eo_difference": [
+            0.0612,
+            0.107428
+          ]
+        }
+      },
+      "model_b": {
+        "group_metrics": {
+          "F": {
+            "n": 40541,
+            "n_positives": 2856,
+            "n_negatives": 37685,
+            "approval_rate": 0.875607,
+            "tpr": 0.414216,
+            "fpr": 0.102428,
+            "fnr": 0.585784,
+            "unreliable": false
+          },
+          "M": {
+            "n": 20961,
+            "n_positives": 2109,
+            "n_negatives": 18852,
+            "approval_rate": 0.805878,
+            "tpr": 0.499289,
+            "fpr": 0.159983,
+            "fnr": 0.500711,
+            "unreliable": false
+          }
+        },
+        "gaps": {
+          "dp_difference": 0.069729,
+          "dp_ratio": 0.920365,
+          "eo_difference": 0.085073
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            0.064048,
+            0.076108
+          ],
+          "dp_ratio": [
+            0.913236,
+            0.926772
+          ],
+          "eo_difference": [
+            0.059659,
+            0.111006
+          ]
+        }
+      },
+      "paired_delta_b_minus_a": {
+        "gaps_diff": {
+          "dp_difference": -0.003372,
+          "dp_ratio": 0.003898,
+          "eo_difference": 0.004268
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.007787,
+            0.001117
+          ],
+          "dp_ratio": [
+            -0.001185,
+            0.008771
+          ],
+          "eo_difference": [
+            -0.012895,
+            0.021096
+          ]
+        }
+      }
+    },
+    "binary_age": {
+      "groups": [
+        "<median",
+        ">=median"
+      ],
+      "unreliable_groups": [],
+      "skipped_bootstrap_resamples": 0,
+      "model_a": {
+        "group_metrics": {
+          "<median": {
+            "n": 30914,
+            "n_positives": 3046,
+            "n_negatives": 27868,
+            "approval_rate": 0.791712,
+            "tpr": 0.499672,
+            "fpr": 0.176439,
+            "fnr": 0.500328,
+            "unreliable": false
+          },
+          ">=median": {
+            "n": 30589,
+            "n_positives": 1919,
+            "n_negatives": 28670,
+            "approval_rate": 0.909314,
+            "tpr": 0.308494,
+            "fpr": 0.076107,
+            "fnr": 0.691506,
+            "unreliable": false
+          }
+        },
+        "gaps": {
+          "dp_difference": 0.117602,
+          "dp_ratio": 0.87067,
+          "eo_difference": 0.191178
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            0.112394,
+            0.123459
+          ],
+          "dp_ratio": [
+            0.864389,
+            0.87636
+          ],
+          "eo_difference": [
+            0.16175,
+            0.217032
+          ]
+        }
+      },
+      "model_b": {
+        "group_metrics": {
+          "<median": {
+            "n": 30914,
+            "n_positives": 3046,
+            "n_negatives": 27868,
+            "approval_rate": 0.797664,
+            "tpr": 0.519041,
+            "fpr": 0.167719,
+            "fnr": 0.480959,
+            "unreliable": false
+          },
+          ">=median": {
+            "n": 30589,
+            "n_positives": 1919,
+            "n_negatives": 28670,
+            "approval_rate": 0.9066,
+            "tpr": 0.341324,
+            "fpr": 0.076805,
+            "fnr": 0.658676,
+            "unreliable": false
+          }
+        },
+        "gaps": {
+          "dp_difference": 0.108936,
+          "dp_ratio": 0.879841,
+          "eo_difference": 0.177717
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            0.103464,
+            0.114532
+          ],
+          "dp_ratio": [
+            0.87407,
+            0.885856
+          ],
+          "eo_difference": [
+            0.145592,
+            0.20647
+          ]
+        }
+      },
+      "paired_delta_b_minus_a": {
+        "gaps_diff": {
+          "dp_difference": -0.008666,
+          "dp_ratio": 0.009171,
+          "eo_difference": -0.013461
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.012859,
+            -0.004574
+          ],
+          "dp_ratio": [
+            0.004782,
+            0.013564
+          ],
+          "eo_difference": [
+            -0.036436,
+            0.007192
+          ]
+        }
+      }
+    },
+    "four_age_bins": {
+      "groups": [
+        "<30",
+        "30-44",
+        "45-59",
+        "60+"
+      ],
+      "unreliable_groups": [],
+      "skipped_bootstrap_resamples": 0,
+      "model_a": {
+        "group_metrics": {
+          "<30": {
+            "n": 8979,
+            "n_positives": 1037,
+            "n_negatives": 7942,
+            "approval_rate": 0.69863,
+            "tpr": 0.596914,
+            "fpr": 0.26278,
+            "fnr": 0.403086,
+            "unreliable": false
+          },
+          "30-44": {
+            "n": 24922,
+            "n_positives": 2243,
+            "n_negatives": 22679,
+            "approval_rate": 0.83649,
+            "tpr": 0.440927,
+            "fpr": 0.136073,
+            "fnr": 0.559073,
+            "unreliable": false
+          },
+          "45-59": {
+            "n": 20555,
+            "n_positives": 1345,
+            "n_negatives": 19210,
+            "approval_rate": 0.896278,
+            "tpr": 0.332342,
+            "fpr": 0.087715,
+            "fnr": 0.667658,
+            "unreliable": false
+          },
+          "60+": {
+            "n": 7047,
+            "n_positives": 340,
+            "n_negatives": 6707,
+            "approval_rate": 0.957429,
+            "tpr": 0.173529,
+            "fpr": 0.035933,
+            "fnr": 0.826471,
+            "unreliable": false
+          }
+        },
+        "gaps": {
+          "dp_difference": 0.258799,
+          "dp_ratio": 0.729694,
+          "eo_difference": 0.423385
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            0.248476,
+            0.266718
+          ],
+          "dp_ratio": [
+            0.721814,
+            0.739568
+          ],
+          "eo_difference": [
+            0.371351,
+            0.472963
+          ]
+        }
+      },
+      "model_b": {
+        "group_metrics": {
+          "<30": {
+            "n": 8979,
+            "n_positives": 1037,
+            "n_negatives": 7942,
+            "approval_rate": 0.711215,
+            "tpr": 0.597878,
+            "fpr": 0.248426,
+            "fnr": 0.402122,
+            "unreliable": false
+          },
+          "30-44": {
+            "n": 24922,
+            "n_positives": 2243,
+            "n_negatives": 22679,
+            "approval_rate": 0.838576,
+            "tpr": 0.472581,
+            "fpr": 0.130649,
+            "fnr": 0.527419,
+            "unreliable": false
+          },
+          "45-59": {
+            "n": 20555,
+            "n_positives": 1345,
+            "n_negatives": 19210,
+            "approval_rate": 0.893943,
+            "tpr": 0.363569,
+            "fpr": 0.088027,
+            "fnr": 0.636431,
+            "unreliable": false
+          },
+          "60+": {
+            "n": 7047,
+            "n_positives": 340,
+            "n_negatives": 6707,
+            "approval_rate": 0.955158,
+            "tpr": 0.197059,
+            "fpr": 0.037125,
+            "fnr": 0.802941,
+            "unreliable": false
+          }
+        },
+        "gaps": {
+          "dp_difference": 0.243943,
+          "dp_ratio": 0.744605,
+          "eo_difference": 0.400819
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            0.232775,
+            0.252682
+          ],
+          "dp_ratio": [
+            0.735844,
+            0.755349
+          ],
+          "eo_difference": [
+            0.347754,
+            0.452399
+          ]
+        }
+      },
+      "paired_delta_b_minus_a": {
+        "gaps_diff": {
+          "dp_difference": -0.014856,
+          "dp_ratio": 0.014911,
+          "eo_difference": -0.022566
+        },
+        "confidence_intervals_95": {
+          "dp_difference": [
+            -0.022875,
+            -0.007225
+          ],
+          "dp_ratio": [
+            0.007481,
+            0.023065
+          ],
+          "eo_difference": [
+            -0.06095,
+            0.019691
+          ]
+        }
+      }
+    }
+  },
+  "by_segment": {
+    "full_file": {
+      "n_applicants": 52699,
+      "model_a": {
+        "decline_rate": 0.138864,
+        "tpr": 0.415071
+      },
+      "model_b": {
+        "decline_rate": 0.137213,
+        "tpr": 0.433481
+      },
+      "attributes": {
+        "gender": {
+          "group_sizes": {
+            "F": 34991,
+            "M": 17707
+          },
+          "unreliable": false,
+          "model_a_gaps": {
+            "dp_difference": 0.063287,
+            "dp_ratio": 0.928278,
+            "eo_difference": 0.066544
+          },
+          "model_b_gaps": {
+            "dp_difference": 0.062882,
+            "dp_ratio": 0.92886,
+            "eo_difference": 0.068511
+          },
+          "delta_b_minus_a": {
+            "dp_difference": -0.000405,
+            "dp_ratio": 0.000582,
+            "eo_difference": 0.001967
+          },
+          "ci_delta_95": {
+            "dp_difference": [
+              -0.005682,
+              0.00392
+            ],
+            "dp_ratio": [
+              -0.004338,
+              0.006469
+            ],
+            "eo_difference": [
+              -0.022323,
+              0.024479
+            ]
+          }
+        },
+        "binary_age": {
+          "group_sizes": {
+            ">=median": 26397,
+            "<median": 26302
+          },
+          "unreliable": false,
+          "model_a_gaps": {
+            "dp_difference": 0.108814,
+            "dp_ratio": 0.881135,
+            "eo_difference": 0.178149
+          },
+          "model_b_gaps": {
+            "dp_difference": 0.102622,
+            "dp_ratio": 0.887723,
+            "eo_difference": 0.174024
+          },
+          "delta_b_minus_a": {
+            "dp_difference": -0.006192,
+            "dp_ratio": 0.006588,
+            "eo_difference": -0.004125
+          },
+          "ci_delta_95": {
+            "dp_difference": [
+              -0.010295,
+              -0.002275
+            ],
+            "dp_ratio": [
+              0.002387,
+              0.010825
+            ],
+            "eo_difference": [
+              -0.023677,
+              0.017464
+            ]
+          }
+        }
+      }
+    },
+    "thin_file": {
+      "n_applicants": 8364,
+      "model_a": {
+        "decline_rate": 0.220708,
+        "tpr": 0.477907
+      },
+      "model_b": {
+        "decline_rate": 0.218675,
+        "tpr": 0.530233
+      },
+      "attributes": {
+        "gender": {
+          "group_sizes": {
+            "F": 5297,
+            "M": 3067
+          },
+          "unreliable": false,
+          "model_a_gaps": {
+            "dp_difference": 0.126696,
+            "dp_ratio": 0.846569,
+            "eo_difference": 0.128381
+          },
+          "model_b_gaps": {
+            "dp_difference": 0.104678,
+            "dp_ratio": 0.872299,
+            "eo_difference": 0.135835
+          },
+          "delta_b_minus_a": {
+            "dp_difference": -0.022018,
+            "dp_ratio": 0.02573,
+            "eo_difference": 0.007454
+          },
+          "ci_delta_95": {
+            "dp_difference": [
+              -0.037051,
+              -0.008563
+            ],
+            "dp_ratio": [
+              0.009661,
+              0.042511
+            ],
+            "eo_difference": [
+              -0.04275,
+              0.044057
+            ]
+          }
+        },
+        "binary_age": {
+          "group_sizes": {
+            "<median": 4348,
+            ">=median": 4016
+          },
+          "unreliable": false,
+          "model_a_gaps": {
+            "dp_difference": 0.16878,
+            "dp_ratio": 0.805336,
+            "eo_difference": 0.257588
+          },
+          "model_b_gaps": {
+            "dp_difference": 0.143794,
+            "dp_ratio": 0.832031,
+            "eo_difference": 0.196284
+          },
+          "delta_b_minus_a": {
+            "dp_difference": -0.024986,
+            "dp_ratio": 0.026695,
+            "eo_difference": -0.061304
+          },
+          "ci_delta_95": {
+            "dp_difference": [
+              -0.040725,
+              -0.010334
+            ],
+            "dp_ratio": [
+              0.010757,
+              0.043281
+            ],
+            "eo_difference": [
+              -0.111389,
+              -0.007595
+            ]
+          }
+        }
+      }
+    },
+    "no_file": {
+      "n_applicants": 440,
+      "model_a": {
+        "decline_rate": 0.111364,
+        "tpr": 0.387097
+      },
+      "model_b": {
+        "decline_rate": 0.118182,
+        "tpr": 0.451613
+      },
+      "attributes": {
+        "gender": {
+          "group_sizes": {
+            "F": 253,
+            "M": 187
+          },
+          "unreliable": false,
+          "model_a_gaps": {
+            "dp_difference": 0.029528,
+            "dp_ratio": 0.967234,
+            "eo_difference": 0.260684
+          },
+          "model_b_gaps": {
+            "dp_difference": 0.03627,
+            "dp_ratio": 0.959576,
+            "eo_difference": 0.282052
+          },
+          "delta_b_minus_a": {
+            "dp_difference": 0.006742,
+            "dp_ratio": -0.007658,
+            "eo_difference": 0.021368
+          },
+          "ci_delta_95": {
+            "dp_difference": [
+              -0.027866,
+              0.038433
+            ],
+            "dp_ratio": [
+              -0.042352,
+              0.029505
+            ],
+            "eo_difference": [
+              -0.222816,
+              0.227
+            ]
+          }
+        },
+        "binary_age": {
+          "group_sizes": {
+            "<median": 264,
+            ">=median": 176
+          },
+          "unreliable": false,
+          "model_a_gaps": {
+            "dp_difference": 0.109848,
+            "dp_ratio": 0.884921,
+            "eo_difference": 0.102291
+          },
+          "model_b_gaps": {
+            "dp_difference": 0.111743,
+            "dp_ratio": 0.882235,
+            "eo_difference": 0.166667
+          },
+          "delta_b_minus_a": {
+            "dp_difference": 0.001895,
+            "dp_ratio": -0.002686,
+            "eo_difference": 0.064376
+          },
+          "ci_delta_95": {
+            "dp_difference": [
+              -0.030303,
+              0.035984
+            ],
+            "dp_ratio": [
+              -0.036422,
+              0.029867
+            ],
+            "eo_difference": [
+              -0.118039,
+              0.25
+            ]
+          }
+        }
+      }
+    }
+  }
+}
