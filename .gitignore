@@ -1,6 +1,6 @@
 # ---- Data & models (large / generated) ----
 /data/
-models/
+/models/
 
 # ---- Reports: only predictions are ignored ----
 reports/predictions/

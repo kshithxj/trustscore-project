@@ -1,0 +1,15 @@
+# ============================================================
+# Model Hyperparameters (Fixed for Model A & Model B)
+# ============================================================
+
+model_a:
+  objective: "binary:logistic"
+  eval_metric: "auc"
+  tree_method: "hist"
+  learning_rate: 0.05
+  max_depth: 6
+  subsample: 0.8
+  colsample_bytree: 0.8
+  n_estimators: 2000
+  early_stopping_rounds: 50
+  enable_categorical: true

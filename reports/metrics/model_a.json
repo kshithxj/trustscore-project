@@ -1,0 +1,146 @@
+{
+  "model_name": "Model A (Bureau Baseline)",
+  "versions": {
+    "xgboost": "3.4.1",
+    "pandas": "3.1.1"
+  },
+  "parameters": {
+    "objective": "binary:logistic",
+    "eval_metric": "auc",
+    "tree_method": "hist",
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "n_estimators": 2000,
+    "early_stopping_rounds": 50,
+    "enable_categorical": true
+  },
+  "early_stopping": {
+    "rounds": 50,
+    "set_in": "constructor",
+    "best_iteration": 348
+  },
+  "training_time_seconds": 24.12,
+  "feature_count": 124,
+  "categoricals_handling": "pandas category dtype with categories learned on train split; XGBoost enable_categorical=True",
+  "validation_auc_overall": 0.74946,
+  "test_results": {
+    "overall": {
+      "applicants": 61503,
+      "positives": 4965,
+      "auc": 0.751652,
+      "ci_95_lower": 0.745044,
+      "ci_95_upper": 0.758377,
+      "skipped_resamples": 0
+    },
+    "by_segment": {
+      "full_file": {
+        "applicants": 52699,
+        "positives": 4074,
+        "auc": 0.754255,
+        "ci_95_lower": 0.746639,
+        "ci_95_upper": 0.761343,
+        "low_precision": false,
+        "skipped_resamples": 0
+      },
+      "thin_file": {
+        "applicants": 8364,
+        "positives": 860,
+        "auc": 0.723296,
+        "ci_95_lower": 0.707265,
+        "ci_95_upper": 0.739383,
+        "low_precision": false,
+        "skipped_resamples": 0
+      },
+      "no_file": {
+        "applicants": 440,
+        "positives": 31,
+        "auc": 0.81497,
+        "ci_95_lower": 0.739093,
+        "ci_95_upper": 0.883703,
+        "low_precision": true,
+        "skipped_resamples": 0
+      }
+    }
+  },
+  "bootstrap_settings": {
+    "n_bootstraps": 200,
+    "seed": 42,
+    "confidence_level": 0.95,
+    "total_skipped_resamples_all": 0
+  },
+  "sanity_guards": {
+    "score_range": [
+      0.0008383144158869982,
+      0.7512277960777283
+    ],
+    "nan_count_val": 0,
+    "nan_count_test": 0,
+    "id_coverage_valid_exact": true,
+    "id_coverage_test_exact": true,
+    "auc_bug_guard_passed": true
+  },
+  "top_15_features_by_gain": [
+    {
+      "feature": "EXT_SOURCE_3",
+      "gain": 50.110870361328125
+    },
+    {
+      "feature": "EXT_SOURCE_2",
+      "gain": 47.78921890258789
+    },
+    {
+      "feature": "NAME_EDUCATION_TYPE",
+      "gain": 23.31585121154785
+    },
+    {
+      "feature": "FLAG_DOCUMENT_3",
+      "gain": 20.10623550415039
+    },
+    {
+      "feature": "NAME_CONTRACT_TYPE",
+      "gain": 20.05519676208496
+    },
+    {
+      "feature": "EXT_SOURCE_1",
+      "gain": 19.909042358398438
+    },
+    {
+      "feature": "DAYS_EMPLOYED",
+      "gain": 14.543004989624023
+    },
+    {
+      "feature": "AMT_GOODS_PRICE",
+      "gain": 14.021788597106934
+    },
+    {
+      "feature": "ORGANIZATION_TYPE",
+      "gain": 13.068806648254395
+    },
+    {
+      "feature": "DEF_30_CNT_SOCIAL_CIRCLE",
+      "gain": 12.477447509765625
+    },
+    {
+      "feature": "REG_CITY_NOT_LIVE_CITY",
+      "gain": 12.25516128540039
+    },
+    {
+      "feature": "bureau_n_active",
+      "gain": 12.095870971679688
+    },
+    {
+      "feature": "AMT_CREDIT",
+      "gain": 12.020695686340332
+    },
+    {
+      "feature": "OWN_CAR_AGE",
+      "gain": 11.838678359985352
+    },
+    {
+      "feature": "REGION_RATING_CLIENT_W_CITY",
+      "gain": 11.684246063232422
+    }
+  ]
+}
