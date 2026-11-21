@@ -25,6 +25,8 @@ def test_extras_files_exist():
         "reports/figures/extras_calibration.png",
         "reports/metrics/extras_stability.json",
         "reports/tables/extras_stability.csv",
+        "reports/metrics/extras_auc_by_group.json",
+        "reports/tables/extras_auc_by_group.csv",
     ]
     for rel_path in expected_files:
         p = _PROJECT_ROOT / rel_path
@@ -115,3 +117,32 @@ def test_stability_splits_distinct():
     for i in range(len(split_train_sets)):
         for j in range(i + 1, len(split_train_sets)):
             assert split_train_sets[i] != split_train_sets[j], f"Split {i+1} identical to split {j+1}"
+
+
+def test_auc_by_group_coverage_and_reproduction():
+    json_path = _PROJECT_ROOT / "reports" / "metrics" / "extras_auc_by_group.json"
+    assert json_path.exists(), "extras_auc_by_group.json missing"
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+
+    repro = data["reproduction_check"]
+    assert repro["diff_a"] <= 1e-6, f"Model A AUC diff {repro['diff_a']} > 1e-6"
+    assert repro["diff_b"] <= 1e-6, f"Model B AUC diff {repro['diff_b']} > 1e-6"
+    assert repro["passed"] is True
+
+    groups = data["groups"]
+
+    # 1. Four age bins cover all 61,503 test rows
+    age_bin_keys = [k for k in groups if k.startswith("four_age_bins:")]
+    total_age_bin_n = sum(groups[k]["n"] for k in age_bin_keys)
+    assert total_age_bin_n == 61503, f"Four age bins sum to {total_age_bin_n}, expected 61,503"
+
+    # 2. Segment x binary age groups cover all 61,503 test rows
+    seg_ba_keys = [k for k in groups if k.startswith("segment_x_binary_age:")]
+    total_seg_ba_n = sum(groups[k]["n"] for k in seg_ba_keys)
+    assert total_seg_ba_n == 61503, f"Segment x binary age sum to {total_seg_ba_n}, expected 61,503"
+
+    # 3. Segment x gender groups cover all 61,502 test rows (excluding 1 XNA)
+    seg_gender_keys = [k for k in groups if k.startswith("segment_x_gender:")]
+    total_seg_gender_n = sum(groups[k]["n"] for k in seg_gender_keys)
+    assert total_seg_gender_n == 61502, f"Segment x gender sum to {total_seg_gender_n}, expected 61,502"
+

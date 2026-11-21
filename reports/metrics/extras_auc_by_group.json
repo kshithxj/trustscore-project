@@ -1,0 +1,438 @@
+{
+  "reproduction_check": {
+    "model_a_saved_auc": 0.751652,
+    "model_a_evaluated_auc": 0.751652,
+    "diff_a": 0.0,
+    "model_b_saved_auc": 0.76681,
+    "model_b_evaluated_auc": 0.76681,
+    "diff_b": 0.0,
+    "passed": true
+  },
+  "groups": {
+    "overall:all": {
+      "slice_category": "overall",
+      "group": "all",
+      "n": 61503,
+      "n_positives": 4965,
+      "n_negatives": 56538,
+      "default_rate": 0.080728,
+      "low_precision": false,
+      "auc_a": 0.751652,
+      "auc_a_ci": [
+        0.745044,
+        0.758377
+      ],
+      "auc_b": 0.76681,
+      "auc_b_ci": [
+        0.759674,
+        0.773116
+      ],
+      "diff_b_minus_a": 0.015158,
+      "diff_ci": [
+        0.01219,
+        0.017969
+      ],
+      "skipped_resamples": 0
+    },
+    "four_age_bins:<30": {
+      "slice_category": "four_age_bins",
+      "group": "<30",
+      "n": 8979,
+      "n_positives": 1037,
+      "n_negatives": 7942,
+      "default_rate": 0.115492,
+      "low_precision": false,
+      "auc_a": 0.739055,
+      "auc_a_ci": [
+        0.725078,
+        0.752082
+      ],
+      "auc_b": 0.750243,
+      "auc_b_ci": [
+        0.734751,
+        0.762829
+      ],
+      "diff_b_minus_a": 0.011189,
+      "diff_ci": [
+        0.005647,
+        0.018475
+      ],
+      "skipped_resamples": 0
+    },
+    "four_age_bins:30-44": {
+      "slice_category": "four_age_bins",
+      "group": "30-44",
+      "n": 24922,
+      "n_positives": 2243,
+      "n_negatives": 22679,
+      "default_rate": 0.090001,
+      "low_precision": false,
+      "auc_a": 0.755206,
+      "auc_a_ci": [
+        0.745104,
+        0.764377
+      ],
+      "auc_b": 0.770689,
+      "auc_b_ci": [
+        0.761295,
+        0.780157
+      ],
+      "diff_b_minus_a": 0.015484,
+      "diff_ci": [
+        0.011139,
+        0.020445
+      ],
+      "skipped_resamples": 0
+    },
+    "four_age_bins:45-59": {
+      "slice_category": "four_age_bins",
+      "group": "45-59",
+      "n": 20555,
+      "n_positives": 1345,
+      "n_negatives": 19210,
+      "default_rate": 0.065434,
+      "low_precision": false,
+      "auc_a": 0.737512,
+      "auc_a_ci": [
+        0.724961,
+        0.7504
+      ],
+      "auc_b": 0.75549,
+      "auc_b_ci": [
+        0.744519,
+        0.767554
+      ],
+      "diff_b_minus_a": 0.017977,
+      "diff_ci": [
+        0.012441,
+        0.023734
+      ],
+      "skipped_resamples": 0
+    },
+    "four_age_bins:60+": {
+      "slice_category": "four_age_bins",
+      "group": "60+",
+      "n": 7047,
+      "n_positives": 340,
+      "n_negatives": 6707,
+      "default_rate": 0.048247,
+      "low_precision": false,
+      "auc_a": 0.692004,
+      "auc_a_ci": [
+        0.667692,
+        0.718712
+      ],
+      "auc_b": 0.719206,
+      "auc_b_ci": [
+        0.691,
+        0.742158
+      ],
+      "diff_b_minus_a": 0.027202,
+      "diff_ci": [
+        0.011798,
+        0.040306
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_gender:full_file_x_F": {
+      "slice_category": "segment_x_gender",
+      "group": "full_file_x_F",
+      "n": 34991,
+      "n_positives": 2387,
+      "n_negatives": 32604,
+      "default_rate": 0.068218,
+      "low_precision": false,
+      "auc_a": 0.755224,
+      "auc_a_ci": [
+        0.744966,
+        0.76433
+      ],
+      "auc_b": 0.769689,
+      "auc_b_ci": [
+        0.761452,
+        0.78002
+      ],
+      "diff_b_minus_a": 0.014465,
+      "diff_ci": [
+        0.01045,
+        0.018566
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_gender:full_file_x_M": {
+      "slice_category": "segment_x_gender",
+      "group": "full_file_x_M",
+      "n": 17707,
+      "n_positives": 1687,
+      "n_negatives": 16020,
+      "default_rate": 0.095273,
+      "low_precision": false,
+      "auc_a": 0.743567,
+      "auc_a_ci": [
+        0.73189,
+        0.755813
+      ],
+      "auc_b": 0.754675,
+      "auc_b_ci": [
+        0.742422,
+        0.767312
+      ],
+      "diff_b_minus_a": 0.011108,
+      "diff_ci": [
+        0.006163,
+        0.01557
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_gender:thin_file_x_F": {
+      "slice_category": "segment_x_gender",
+      "group": "thin_file_x_F",
+      "n": 5297,
+      "n_positives": 451,
+      "n_negatives": 4846,
+      "default_rate": 0.085143,
+      "low_precision": false,
+      "auc_a": 0.716568,
+      "auc_a_ci": [
+        0.690509,
+        0.73846
+      ],
+      "auc_b": 0.753421,
+      "auc_b_ci": [
+        0.728814,
+        0.775768
+      ],
+      "diff_b_minus_a": 0.036853,
+      "diff_ci": [
+        0.023803,
+        0.048983
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_gender:thin_file_x_M": {
+      "slice_category": "segment_x_gender",
+      "group": "thin_file_x_M",
+      "n": 3067,
+      "n_positives": 409,
+      "n_negatives": 2658,
+      "default_rate": 0.133355,
+      "low_precision": false,
+      "auc_a": 0.713905,
+      "auc_a_ci": [
+        0.68665,
+        0.746114
+      ],
+      "auc_b": 0.745191,
+      "auc_b_ci": [
+        0.718019,
+        0.773616
+      ],
+      "diff_b_minus_a": 0.031286,
+      "diff_ci": [
+        0.015166,
+        0.045254
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_gender:no_file_x_F": {
+      "slice_category": "segment_x_gender",
+      "group": "no_file_x_F",
+      "n": 253,
+      "n_positives": 18,
+      "n_negatives": 235,
+      "default_rate": 0.071146,
+      "low_precision": true,
+      "auc_a": 0.788889,
+      "auc_a_ci": [
+        0.685177,
+        0.876659
+      ],
+      "auc_b": 0.849882,
+      "auc_b_ci": [
+        0.768371,
+        0.915325
+      ],
+      "diff_b_minus_a": 0.060993,
+      "diff_ci": [
+        -0.003355,
+        0.130422
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_gender:no_file_x_M": {
+      "slice_category": "segment_x_gender",
+      "group": "no_file_x_M",
+      "n": 187,
+      "n_positives": 13,
+      "n_negatives": 174,
+      "default_rate": 0.069519,
+      "low_precision": true,
+      "auc_a": 0.845712,
+      "auc_a_ci": [
+        0.726978,
+        0.941339
+      ],
+      "auc_b": 0.822723,
+      "auc_b_ci": [
+        0.716974,
+        0.920059
+      ],
+      "diff_b_minus_a": -0.022989,
+      "diff_ci": [
+        -0.088917,
+        0.028672
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_binary_age:full_file_x_<median": {
+      "slice_category": "segment_x_binary_age",
+      "group": "full_file_x_<median",
+      "n": 26302,
+      "n_positives": 2498,
+      "n_negatives": 23804,
+      "default_rate": 0.094974,
+      "low_precision": false,
+      "auc_a": 0.754782,
+      "auc_a_ci": [
+        0.745622,
+        0.761999
+      ],
+      "auc_b": 0.766222,
+      "auc_b_ci": [
+        0.757441,
+        0.773389
+      ],
+      "diff_b_minus_a": 0.01144,
+      "diff_ci": [
+        0.008017,
+        0.015631
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_binary_age:full_file_x_>=median": {
+      "slice_category": "segment_x_binary_age",
+      "group": "full_file_x_>=median",
+      "n": 26397,
+      "n_positives": 1576,
+      "n_negatives": 24821,
+      "default_rate": 0.059704,
+      "low_precision": false,
+      "auc_a": 0.734415,
+      "auc_a_ci": [
+        0.721105,
+        0.750957
+      ],
+      "auc_b": 0.751168,
+      "auc_b_ci": [
+        0.738699,
+        0.765029
+      ],
+      "diff_b_minus_a": 0.016752,
+      "diff_ci": [
+        0.01149,
+        0.022283
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_binary_age:thin_file_x_<median": {
+      "slice_category": "segment_x_binary_age",
+      "group": "thin_file_x_<median",
+      "n": 4348,
+      "n_positives": 526,
+      "n_negatives": 3822,
+      "default_rate": 0.120975,
+      "low_precision": false,
+      "auc_a": 0.726487,
+      "auc_a_ci": [
+        0.70759,
+        0.748255
+      ],
+      "auc_b": 0.754235,
+      "auc_b_ci": [
+        0.731096,
+        0.776931
+      ],
+      "diff_b_minus_a": 0.027747,
+      "diff_ci": [
+        0.014284,
+        0.03764
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_binary_age:thin_file_x_>=median": {
+      "slice_category": "segment_x_binary_age",
+      "group": "thin_file_x_>=median",
+      "n": 4016,
+      "n_positives": 334,
+      "n_negatives": 3682,
+      "default_rate": 0.083167,
+      "low_precision": false,
+      "auc_a": 0.703525,
+      "auc_a_ci": [
+        0.676055,
+        0.731667
+      ],
+      "auc_b": 0.745729,
+      "auc_b_ci": [
+        0.721152,
+        0.769771
+      ],
+      "diff_b_minus_a": 0.042203,
+      "diff_ci": [
+        0.026344,
+        0.058742
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_binary_age:no_file_x_<median": {
+      "slice_category": "segment_x_binary_age",
+      "group": "no_file_x_<median",
+      "n": 264,
+      "n_positives": 22,
+      "n_negatives": 242,
+      "default_rate": 0.083333,
+      "low_precision": true,
+      "auc_a": 0.792825,
+      "auc_a_ci": [
+        0.707016,
+        0.870335
+      ],
+      "auc_b": 0.810856,
+      "auc_b_ci": [
+        0.709963,
+        0.890128
+      ],
+      "diff_b_minus_a": 0.018032,
+      "diff_ci": [
+        -0.040677,
+        0.066004
+      ],
+      "skipped_resamples": 0
+    },
+    "segment_x_binary_age:no_file_x_>=median": {
+      "slice_category": "segment_x_binary_age",
+      "group": "no_file_x_>=median",
+      "n": 176,
+      "n_positives": 9,
+      "n_negatives": 167,
+      "default_rate": 0.051136,
+      "low_precision": true,
+      "auc_a": 0.817033,
+      "auc_a_ci": [
+        0.601836,
+        0.973409
+      ],
+      "auc_b": 0.874251,
+      "auc_b_ci": [
+        0.77302,
+        0.964557
+      ],
+      "diff_b_minus_a": 0.057219,
+      "diff_ci": [
+        -0.046805,
+        0.197232
+      ],
+      "skipped_resamples": 0
+    }
+  }
+}
