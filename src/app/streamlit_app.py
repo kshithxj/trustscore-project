@@ -40,6 +40,13 @@ from src.app.helpers import (
     load_calibration_bins_csv,
     load_calibration_json,
     load_auc_by_group_json,
+    load_proxy_json,
+    load_shap_summary_json,
+    load_mitigation_control_json,
+    load_ablation_json,
+    load_shap_notes_md,
+    load_limitations_md,
+    load_shap_sample_parquet,
     get_display_sample_for_flips,
     compute_live_policy,
     check_consistency_at_15,
@@ -291,6 +298,83 @@ def build_fairness_gaps_15_chart() -> alt.Chart:
     return chart
 
 
+def build_proxy_leakage_chart() -> alt.Chart:
+    """Builds proxy prediction AUC chart (S1, S2, S3) with 0.5 reference line from proxy.json."""
+    proxy_data = load_proxy_json()
+    rows = []
+    for target_key, target_label in [("gender", "Predicting Gender"), ("binary_age", "Predicting Age")]:
+        fsets = proxy_data["targets"][target_key]["feature_sets"]
+        for s_key in ["S1", "S2", "S3"]:
+            rows.append({
+                "target": target_label,
+                "feature_set": s_key,
+                "auc": fsets[s_key]["mean_auc"],
+                "std": fsets[s_key]["std_auc"],
+            })
+
+    df = pd.DataFrame(rows)
+    bars = (
+        alt.Chart()
+        .mark_bar()
+        .encode(
+            x=alt.X("feature_set:N", title="Feature Set", sort=["S1", "S2", "S3"]),
+            y=alt.Y("auc:Q", title="Cross-Validated AUC", scale=alt.Scale(domain=[0.45, 1.0])),
+            color=alt.Color("feature_set:N", scale=alt.Scale(scheme="tableau10"), legend=alt.Legend(title="Feature Set")),
+            tooltip=[
+                alt.Tooltip("target:N"),
+                alt.Tooltip("feature_set:N"),
+                alt.Tooltip("auc:Q", format=".4f"),
+                alt.Tooltip("std:Q", format=".4f"),
+            ],
+        )
+    )
+    rule = alt.Chart().mark_rule(color="red", strokeDash=[4, 4]).encode(y=alt.datum(0.5))
+    chart = alt.layer(bars, rule, data=df).properties(width=220, height=280).facet(column=alt.Column("target:N", title=None))
+    return chart
+
+
+def build_mitigation_overview_chart() -> alt.Chart:
+    """Builds mitigated vs control chart for equalized odds and balanced accuracy from mitigation_control.json."""
+    mit_data = load_mitigation_control_json()
+    runs = mit_data["runs"]
+
+    rows = []
+    run_configs = [
+        ("gender_equalized_odds", "Gender EO"),
+        ("gender_demographic_parity", "Gender DP"),
+        ("binary_age_equalized_odds", "Age EO"),
+        ("binary_age_demographic_parity", "Age DP"),
+    ]
+
+    for run_key, label in run_configs:
+        r = runs[run_key]
+        mit = r["mitigated"]
+        ctrl = r["control"]
+
+        rows.append({"run": label, "variant": "Mitigated", "metric": "Equalized Odds Diff", "val": mit["equalized_odds_difference"]})
+        rows.append({"run": label, "variant": "Control (Single Thresh)", "metric": "Equalized Odds Diff", "val": ctrl["equalized_odds_difference"]})
+
+        rows.append({"run": label, "variant": "Mitigated", "metric": "Balanced Accuracy", "val": mit["balanced_accuracy"]})
+        rows.append({"run": label, "variant": "Control (Single Thresh)", "metric": "Balanced Accuracy", "val": ctrl["balanced_accuracy"]})
+
+    df = pd.DataFrame(rows)
+    color_scale = alt.Scale(domain=["Mitigated", "Control (Single Thresh)"], range=["#7570b3", "#1b9e77"])
+
+    bars = (
+        alt.Chart(df)
+        .mark_bar()
+        .encode(
+            x=alt.X("variant:N", title=None, axis=alt.Axis(labels=False)),
+            y=alt.Y("val:Q", title="Value"),
+            color=alt.Color("variant:N", scale=color_scale),
+            tooltip=[alt.Tooltip("run:N"), alt.Tooltip("variant:N"), alt.Tooltip("metric:N"), alt.Tooltip("val:Q", format=".4f")],
+        )
+        .properties(width=140, height=200)
+        .facet(row=alt.Row("metric:N", title=None), column=alt.Column("run:N", title=None))
+    )
+    return bars
+
+
 # =============================================================================
 # PAGE 0: GUIDED TOUR
 # =============================================================================
@@ -387,13 +471,47 @@ def render_page_0_guided_tour():
         st.caption("Source: reports/metrics/fairness.json")
 
     elif tour_step.startswith("5."):
-        st.info("Added in stage 3 (Page 5: Proxy leakage).")
+        proxy_data = load_proxy_json()
+        s1_g = proxy_data["targets"]["gender"]["feature_sets"]["S1"]["mean_auc"]
+        s1_a = proxy_data["targets"]["binary_age"]["feature_sets"]["S1"]["mean_auc"]
+        takeaway = (
+            f"Standard application features (S1) predict gender with {s1_g:.4f} AUC and age with {s1_a:.4f} AUC (baseline 0.50), "
+            "demonstrating severe proxy leakage through legitimate predictors such as occupation, income, and vehicle ownership."
+        )
+        st.info(takeaway)
+        st.altair_chart(build_proxy_leakage_chart(), use_container_width=True)
+        st.caption("Source: reports/metrics/proxy.json")
 
     elif tour_step.startswith("6."):
-        st.info("Added in stage 3 (Page 6: Explanations & Applicant Explorer).")
+        shap_sum = load_shap_summary_json()
+        lexp = shap_sum["local_explanation"]
+        app_id = lexp["applicant_id"]
+        app_score = lexp["score"]
+        top_feat = lexp["top_8_contributions"][0]["feature"]
+        top_contrib = lexp["top_8_contributions"][0]["shap_value"]
+
+        takeaway = (
+            f"Local explanation for the median declined thin-file applicant ({app_id}, score {app_score:.4f}): "
+            f"the strongest risk driver is {top_feat} (+{top_contrib:.4f} log-odds), illustrating how TreeSHAP attributes decision margins."
+        )
+        st.info(takeaway)
+        img_path = _PROJECT_ROOT / "reports" / "figures" / "shap_local_declined_thin_file.png"
+        if img_path.exists():
+            st.image(str(img_path), caption="Local explanation for median declined thin-file applicant (SK_ID_CURR 333107). Source: reports/figures/shap_local_declined_thin_file.png", use_container_width=True)
+        else:
+            st.caption("Source: reports/metrics/shap_summary.json")
 
     elif tour_step.startswith("7."):
-        st.info("Added in stage 3 (Page 7: Mitigation lab).")
+        mit_data = load_mitigation_control_json()
+        g_eo_mit = mit_data["runs"]["gender_equalized_odds"]["mitigated"]["equalized_odds_difference"]
+        g_eo_ctrl = mit_data["runs"]["gender_equalized_odds"]["control"]["equalized_odds_difference"]
+        takeaway = (
+            f"Threshold optimization reduces gender equalized odds difference to {g_eo_mit:.4f} vs {g_eo_ctrl:.4f} for the matched control, "
+            "but requires explicit group-dependent decision cutoffs, which is legally and ethically contested in credit underwriting."
+        )
+        st.info(takeaway)
+        st.altair_chart(build_mitigation_overview_chart(), use_container_width=True)
+        st.caption("Source: reports/metrics/mitigation_control.json")
 
 
 # =============================================================================
@@ -429,7 +547,6 @@ def render_page_1_does_behavior_help():
     )
     st.info(takeaway)
 
-    # KPI Cards
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Model A Test AUC", f"{auc_a:.4f}", help="Bureau baseline model")
     col2.metric("Model B Test AUC", f"{auc_b:.4f}", delta=f"+{lift:.4f} Lift")
@@ -441,7 +558,6 @@ def render_page_1_does_behavior_help():
     st.caption("Source: reports/metrics/model_a.json, reports/metrics/model_b.json, reports/metrics/a_vs_b.json")
 
     st.subheader("2. Stability Across Random Splits (B minus A)")
-    # Extract 5 splits from extras_stability.json and compute mean + std in code
     split_rows = []
     for sp in stab["splits"]:
         s_id = sp["seed"]
@@ -453,7 +569,6 @@ def render_page_1_does_behavior_help():
     df_splits = pd.DataFrame(split_rows)
     stats = df_splits.groupby("segment")["diff"].agg(["mean", "std"]).reset_index()
 
-    # Altair chart: points for individual splits + summary errorbar
     chart_pts = (
         alt.Chart(df_splits)
         .mark_circle(size=70, color="#d95f02", opacity=0.8)
@@ -489,10 +604,8 @@ def render_page_2_flip_explorer():
     thresh_a = float(fj["policy"]["threshold_a"])
     thresh_b = float(fj["policy"]["threshold_b"])
 
-    # Segment filter
     seg_choice = st.selectbox("Segment Filter", ["all", "full_file", "thin_file", "no_file"], index=0)
     
-    # Load slice stats for takeaway
     if seg_choice == "all":
         s_info = flips_data["slices"]["overall"]
     else:
@@ -520,15 +633,12 @@ def render_page_2_flip_explorer():
     col4.metric("Newly Decl Good", f"{n_good_dec:,}", help="Approved by A, Declined by B (TARGET = 0)")
     col5.metric("Net Gain", f"{net_val:,}", f"[{ci_net_l:.0f}, {ci_net_u:.0f}]")
 
-    # Display sample scatter plot
     sample_df = get_display_sample_for_flips(segment_filter=seg_choice)
     n_sample_tot = len(sample_df)
     n_sample_def = int((sample_df["TARGET"] == 1).sum())
     n_sample_non = n_sample_tot - n_sample_def
 
-    # Add human readable outcome column
     sample_df["Outcome"] = np.where(sample_df["TARGET"] == 1, "Default (TARGET=1)", "Non-Default (TARGET=0)")
-
     color_scale = alt.Scale(domain=["Default (TARGET=1)", "Non-Default (TARGET=0)"], range=["#e41a1c", "#377eb8"])
 
     scatter = (
@@ -549,7 +659,6 @@ def render_page_2_flip_explorer():
         .properties(height=480)
     )
 
-    # Threshold rule overlays
     rule_x = alt.Chart(pd.DataFrame({"x": [thresh_a]})).mark_rule(color="black", strokeDash=[4, 4]).encode(x="x:Q")
     rule_y = alt.Chart(pd.DataFrame({"y": [thresh_b]})).mark_rule(color="black", strokeDash=[4, 4]).encode(y="y:Q")
 
@@ -598,7 +707,6 @@ def render_page_3_policy_simulator():
 
     decline_rate = st.slider("Target Decline Rate", min_value=0.05, max_value=0.30, value=0.15, step=0.01, format="%.0f%%")
 
-    # Live computation
     live_res = compute_live_policy(model_choice, attr_choice, decline_rate)
     thresh = live_res["threshold"]
     real_decl = live_res["realized_decline_rate"]
@@ -612,7 +720,6 @@ def render_page_3_policy_simulator():
     )
     st.info(takeaway)
 
-    # 15% Verification Check against fairness.json
     if np.isclose(decline_rate, 0.15):
         chk = check_consistency_at_15()
         if chk["passed"]:
@@ -656,7 +763,6 @@ def render_page_3_policy_simulator():
     st.subheader("2. Efficiency Frontier Across Decline Rates (5% – 30%)")
     frontier_df = load_frontier_csv()
     
-    # Filter for the chosen attribute columns
     dp_col = "gender_dp_diff" if attr_choice == "gender" else "binary_age_dp_diff"
     eo_col = "gender_eo_diff" if attr_choice == "gender" else "binary_age_eo_diff"
 
@@ -688,10 +794,7 @@ def render_page_3_policy_simulator():
     rule = alt.Chart().mark_rule(color="red", strokeDash=[4, 4]).encode(x=alt.datum(decline_rate))
     chart_faceted = alt.layer(line_chart, rule, data=df_fplot).properties(height=280, width=240).facet(column=alt.Column("Metric:N", title=None))
 
-    st.altair_chart(
-        chart_faceted,
-        use_container_width=True,
-    )
+    st.altair_chart(chart_faceted, use_container_width=True)
     st.caption("Dashed red vertical rule marks current slider position. Source: reports/tables/app_frontier.csv")
 
     st.subheader(f"3. Base Rates: {attr_choice.title()} Groups")
@@ -734,7 +837,6 @@ def render_page_4_fairness_calibration():
     st.subheader(f"1. Reliability Curves by {attr_toggle.title()} ({m_toggle})")
     sub_bins = bins_df[(bins_df["model"] == m_key) & (bins_df["group_type"] == attr_toggle)].copy()
 
-    # Filter out XNA if gender
     if attr_toggle == "gender":
         sub_bins = sub_bins[sub_bins["group_value"] != "XNA"]
 
@@ -756,7 +858,6 @@ def render_page_4_fairness_calibration():
         .properties(height=360)
     )
 
-    # Reference 45-degree line
     diag_df = pd.DataFrame({"x": [0, 0.45], "y": [0, 0.45]})
     diag_line = alt.Chart(diag_df).mark_line(color="gray", strokeDash=[4, 4]).encode(x="x:Q", y="y:Q")
 
@@ -764,7 +865,6 @@ def render_page_4_fairness_calibration():
     st.caption("Dashed gray line represents perfect calibration (predicted = observed). Source: reports/tables/extras_calibration_bins.csv")
 
     st.subheader(f"2. Group Calibration Summary Table ({m_toggle})")
-    # Table of mean predicted vs observed default rate, Brier score and ECE point estimate
     calib_groups = calib_json[m_key]["groups"]
     table_rows = []
     for g_id, g_info in calib_groups.items():
@@ -773,7 +873,6 @@ def render_page_4_fairness_calibration():
             if val_name == "XNA":
                 continue
 
-            # Special rule: Do NOT display ECE confidence intervals for thin_file or no_file
             if val_name in ["thin_file", "no_file"]:
                 ece_ci_str = "N/A (Interval Inversion)"
             else:
@@ -819,11 +918,399 @@ def render_page_4_fairness_calibration():
 
 
 # =============================================================================
-# Placeholder Renderers for Pages 5 to 9 (Completed in Stage 3)
+# PAGE 5: PROXY LEAKAGE
 # =============================================================================
-def render_stage_3_placeholder(page_title: str):
-    st.title(page_title)
-    st.info("Added in stage 3.")
+def render_page_5_proxy_leakage():
+    st.title("🔍 Proxy Leakage Evaluation")
+
+    proxy_data = load_proxy_json()
+    targets = proxy_data["targets"]
+
+    g_s1_auc = targets["gender"]["feature_sets"]["S1"]["mean_auc"]
+    g_s3_auc = targets["gender"]["feature_sets"]["S3"]["mean_auc"]
+    a_s1_auc = targets["binary_age"]["feature_sets"]["S1"]["mean_auc"]
+    a_s3_auc = targets["binary_age"]["feature_sets"]["S3"]["mean_auc"]
+
+    takeaway = (
+        f"Predictive models trained on inputs strictly excluding protected attributes reveal severe proxy leakage: "
+        f"application features alone (S1) predict gender with {g_s1_auc:.4f} AUC and binary age with {a_s1_auc:.4f} AUC "
+        f"(rising to {g_s3_auc:.4f} and {a_s3_auc:.4f} in S3 vs 0.50 baseline). "
+        "Omitting protected attributes does not prevent models from learning demographic proxies."
+    )
+    st.info(takeaway)
+
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Gender S1 AUC", f"{g_s1_auc:.4f}", help="Application features only")
+    col2.metric("Gender S3 AUC", f"{g_s3_auc:.4f}", help="Application + Behavioral")
+    col3.metric("Age S1 AUC", f"{a_s1_auc:.4f}", help="Application features only")
+    col4.metric("Age S3 AUC", f"{a_s3_auc:.4f}", help="Application + Behavioral")
+
+    st.subheader("1. Cross-Validated AUC Predicting Protected Attributes (S1, S2, S3)")
+    st.altair_chart(build_proxy_leakage_chart(), use_container_width=True)
+    st.caption("An AUC well above 0.5 means the inputs can reveal the attribute even though it is not an input. S1 = Application, S2 = Behavioral, S3 = Combined. Source: reports/metrics/proxy.json")
+
+    st.subheader("2. Target Prevalence & Top Proxy Features")
+    col_t1, col_t2 = st.columns(2)
+
+    with col_t1:
+        st.markdown("#### Gender Target Details")
+        st.write(f"- **Positive Label**: {targets['gender']['positive_label']}")
+        st.write(f"- **Prevalence**: {targets['gender']['prevalence']:.2%}")
+        st.write(f"- **Majority Class Accuracy**: {targets['gender']['majority_class_accuracy']:.2%}")
+        st.write(f"- **Samples**: {targets['gender']['n_samples']:,}")
+        
+        top5_g = targets["gender"]["top_5_features_by_gain_for_best_set"]["top_5"]
+        st.dataframe(pd.DataFrame(top5_g), use_container_width=True)
+        st.caption("Top 5 features by gain predicting gender. Source: reports/metrics/proxy.json")
+
+    with col_t2:
+        st.markdown("#### Binary Age Target Details")
+        st.write(f"- **Positive Label**: {targets['binary_age']['positive_label']}")
+        st.write(f"- **Prevalence**: {targets['binary_age']['prevalence']:.2%}")
+        st.write(f"- **Majority Class Accuracy**: {targets['binary_age']['majority_class_accuracy']:.2%}")
+        st.write(f"- **Samples**: {targets['binary_age']['n_samples']:,}")
+
+        top5_a = targets["binary_age"]["top_5_features_by_gain_for_best_set"]["top_5"]
+        st.dataframe(pd.DataFrame(top5_a), use_container_width=True)
+        st.caption("Top 5 features by gain predicting binary age. Source: reports/metrics/proxy.json")
+
+
+# =============================================================================
+# PAGE 6: EXPLANATIONS & APPLICANT EXPLORER
+# =============================================================================
+def render_page_6_explanations():
+    st.title("💡 Explanations & Applicant Explorer")
+
+    shap_data = load_shap_summary_json()
+    seg_sums = shap_data["segment_summaries"]
+    fj = load_fairness_json()
+    tb = float(fj["policy"]["threshold_b"])
+    ta = float(fj["policy"]["threshold_a"])
+
+    b_share_full = seg_sums["full_file"]["behavioral_share"]
+    b_share_thin = seg_sums["thin_file"]["behavioral_share"]
+    top_full = list(seg_sums["full_file"]["top_15_features"].keys())[0]
+    top_thin = list(seg_sums["thin_file"]["top_15_features"].keys())[0]
+
+    takeaway = (
+        f"Behavioral features account for {b_share_full:.1%} of mean absolute SHAP in full-file and {b_share_thin:.1%} in thin-file. "
+        f"The primary global feature across segments remains {top_full}, while behavioral predictors such as repayment history provide "
+        "supplementary signal especially when bureau depth is scarce."
+    )
+    st.info(takeaway)
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Full-File Behavioral Share", f"{b_share_full:.1%}")
+    col2.metric("Thin-File Behavioral Share", f"{b_share_thin:.1%}")
+    col3.metric("Top Global Predictor", top_full)
+
+    st.subheader("1. Global Feature Importance (Top 15 Features by Segment)")
+    col_g1, col_g2 = st.columns(2)
+    with col_g1:
+        st.markdown("#### Full-File Top 15 Features")
+        full_df = pd.DataFrame([
+            {"Feature": f, "Mean |SHAP|": v}
+            for f, v in seg_sums["full_file"]["top_15_features"].items()
+        ])
+        c_full = (
+            alt.Chart(full_df)
+            .mark_bar(color="#1f77b4")
+            .encode(
+                x=alt.X("Mean |SHAP|:Q", title="Mean |SHAP| (Margin Scale)"),
+                y=alt.Y("Feature:N", sort="-x", title=None),
+                tooltip=[alt.Tooltip("Feature:N"), alt.Tooltip("Mean |SHAP|:Q", format=".4f")],
+            )
+            .properties(height=360)
+        )
+        st.altair_chart(c_full, use_container_width=True)
+
+    with col_g2:
+        st.markdown("#### Thin-File Top 15 Features")
+        thin_df = pd.DataFrame([
+            {"Feature": f, "Mean |SHAP|": v}
+            for f, v in seg_sums["thin_file"]["top_15_features"].items()
+        ])
+        c_thin = (
+            alt.Chart(thin_df)
+            .mark_bar(color="#ff7f0e")
+            .encode(
+                x=alt.X("Mean |SHAP|:Q", title="Mean |SHAP| (Margin Scale)"),
+                y=alt.Y("Feature:N", sort="-x", title=None),
+                tooltip=[alt.Tooltip("Feature:N"), alt.Tooltip("Mean |SHAP|:Q", format=".4f")],
+            )
+            .properties(height=360)
+        )
+        st.altair_chart(c_thin, use_container_width=True)
+
+    st.caption("Margin (log-odds) scale. Source: reports/metrics/shap_summary.json")
+
+    st.subheader("2. Applicant Explorer")
+    shap_sample = load_shap_sample_parquet()
+
+    col_f1, col_f2, col_f3 = st.columns(3)
+    filt_seg = col_f1.selectbox("Filter Segment", ["all", "full_file", "thin_file", "no_file"], index=0)
+    filt_dec = col_f2.selectbox("Filter Model B Decision (15% Policy)", ["All", "Declined", "Approved"], index=0)
+    filt_out = col_f3.selectbox("Filter Actual Outcome", ["All", "Default (TARGET=1)", "Non-Default (TARGET=0)"], index=0)
+
+    filtered = shap_sample.copy()
+    if filt_seg != "all":
+        filtered = filtered[filtered["segment"] == filt_seg]
+    if filt_dec == "Declined":
+        filtered = filtered[filtered["score_b"] >= tb]
+    elif filt_dec == "Approved":
+        filtered = filtered[filtered["score_b"] < tb]
+    if filt_out == "Default (TARGET=1)":
+        filtered = filtered[filtered["TARGET"] == 1]
+    elif filt_out == "Non-Default (TARGET=0)":
+        filtered = filtered[filtered["TARGET"] == 0]
+
+    st.write(f"Matching sample applicants: **{len(filtered):,}** (from 4,940 precomputed test applicants)")
+
+    if len(filtered) > 0:
+        cand_ids = filtered["SK_ID_CURR"].tolist()
+        sel_id = st.selectbox("Select Applicant (SK_ID_CURR)", cand_ids, index=0)
+        row = filtered[filtered["SK_ID_CURR"] == sel_id].iloc[0]
+
+        dec_a = "Declined" if row["score_a"] >= ta else "Approved"
+        dec_b = "Declined" if row["score_b"] >= tb else "Approved"
+        outcome_lbl = "Default (TARGET=1)" if row["TARGET"] == 1 else "Non-Default (TARGET=0)"
+
+        c_a1, c_a2, c_a3, c_a4, c_a5 = st.columns(5)
+        c_a1.metric("Segment", row["segment"])
+        c_a2.metric("Model A Score", f"{row['score_a']:.4f}", dec_a)
+        c_a3.metric("Model B Score", f"{row['score_b']:.4f}", dec_b)
+        c_a4.metric("Bias Term", f"{row['bias']:.4f}")
+        c_a5.metric("Actual Outcome", outcome_lbl)
+
+        contrib_cols = [c for c in shap_sample.columns if c.startswith("shap_")]
+        app_contribs = []
+        for c in contrib_cols:
+            f_name = c[5:]
+            c_val = float(row[c])
+            raw_val = row[f"raw_{f_name}"] if f"raw_{f_name}" in row else np.nan
+            app_contribs.append({
+                "Feature": f_name,
+                "Contribution": c_val,
+                "AbsContribution": abs(c_val),
+                "Feature Value": str(raw_val),
+                "Direction": "Increases Risk" if c_val > 0 else "Decreases Risk",
+            })
+
+        df_top10 = pd.DataFrame(app_contribs).sort_values("AbsContribution", ascending=False).head(10)
+
+        c_local = (
+            alt.Chart(df_top10)
+            .mark_bar()
+            .encode(
+                x=alt.X("Contribution:Q", title="SHAP Contribution (Log-Odds Scale)"),
+                y=alt.Y("Feature:N", sort="-x", title=None),
+                color=alt.Color("Direction:N", scale=alt.Scale(domain=["Increases Risk", "Decreases Risk"], range=["#e41a1c", "#377eb8"])),
+                tooltip=[
+                    alt.Tooltip("Feature:N"),
+                    alt.Tooltip("Contribution:Q", format=".4f"),
+                    alt.Tooltip("Feature Value:N"),
+                    alt.Tooltip("Direction:N"),
+                ],
+            )
+            .properties(height=320)
+        )
+        st.altair_chart(c_local, use_container_width=True)
+        st.caption("Top 10 feature contributions on the margin (log-odds) scale. SHAP describes what the model uses, not what causes default. Source: reports/predictions/extras/app_shap_sample.parquet")
+
+    st.subheader("3. Benchmark Local Explanation: Median Declined Thin-File Applicant")
+    img_path = _PROJECT_ROOT / "reports" / "figures" / "shap_local_declined_thin_file.png"
+    if img_path.exists():
+        st.image(str(img_path), caption="Local explanation for median declined thin-file applicant (SK_ID_CURR 333107). Source: reports/figures/shap_local_declined_thin_file.png", use_container_width=True)
+
+    st.subheader("4. SHAP Qualitative Notes")
+    st.markdown(load_shap_notes_md())
+    st.caption("Source: reports/shap_notes.md")
+
+
+# =============================================================================
+# PAGE 7: MITIGATION LAB
+# =============================================================================
+def render_page_7_mitigation_lab():
+    st.title("⚖️ Mitigation Lab: Post-Processing Tradeoffs")
+
+    st.warning(
+        "⚠️ **Experiment only**: This uses a protected attribute at decision time, which is legally and ethically "
+        "contested and may be unlawful in some jurisdictions. It changes the decline rate and moves errors between groups."
+    )
+
+    mit_data = load_mitigation_control_json()
+    runs = mit_data["runs"]
+
+    g_eo_mit = runs["gender_equalized_odds"]["mitigated"]["equalized_odds_difference"]
+    g_eo_ctrl = runs["gender_equalized_odds"]["control"]["equalized_odds_difference"]
+    g_eo_decl = runs["gender_equalized_odds"]["mitigated"]["decline_rate"]
+
+    takeaway = (
+        f"Post-processing mitigation against the matched single-threshold control reduces gender equalized odds difference "
+        f"from {g_eo_ctrl:.4f} to {g_eo_mit:.4f}, but inflates overall decline volume to {g_eo_decl:.1%}. "
+        "Evaluating against a matched control reveals that apparent fairness gains often stem from threshold shifts rather than true equity improvements."
+    )
+    st.info(takeaway)
+
+    run_options = {
+        "Gender: Equalized Odds": "gender_equalized_odds",
+        "Gender: Demographic Parity": "gender_demographic_parity",
+        "Binary Age: Equalized Odds": "binary_age_equalized_odds",
+        "Binary Age: Demographic Parity": "binary_age_demographic_parity",
+    }
+    sel_label = st.selectbox("Select Mitigation Experiment", list(run_options.keys()), index=0)
+    sel_run = runs[run_options[sel_label]]
+
+    mit = sel_run["mitigated"]
+    ctrl = sel_run["control"]
+    paired = sel_run["paired_difference_mitigated_minus_control"]
+    pts = paired["point_estimates"]
+    ci_dict = paired["confidence_intervals_95"]
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Mitigated Decline Rate", f"{mit['decline_rate']:.1%}", f"Control: {ctrl['decline_rate']:.1%}")
+    c2.metric("Mitigated EO Diff", f"{mit['equalized_odds_difference']:.4f}", f"Control: {ctrl['equalized_odds_difference']:.4f}")
+    c3.metric("Mitigated DP Diff", f"{mit['demographic_parity_difference']:.4f}", f"Control: {ctrl['demographic_parity_difference']:.4f}")
+    c4.metric("Balanced Accuracy", f"{mit['balanced_accuracy']:.4f}", f"Control: {ctrl['balanced_accuracy']:.4f}")
+
+    st.subheader("1. Mitigated vs Matched Single-Threshold Control Metrics")
+    comp_rows = [
+        {"Metric": "Equalized Odds Diff", "Variant": "Mitigated", "Value": mit["equalized_odds_difference"]},
+        {"Metric": "Equalized Odds Diff", "Variant": "Control", "Value": ctrl["equalized_odds_difference"]},
+        {"Metric": "Demographic Parity Diff", "Variant": "Mitigated", "Value": mit["demographic_parity_difference"]},
+        {"Metric": "Demographic Parity Diff", "Variant": "Control", "Value": ctrl["demographic_parity_difference"]},
+        {"Metric": "Balanced Accuracy", "Variant": "Mitigated", "Value": mit["balanced_accuracy"]},
+        {"Metric": "Balanced Accuracy", "Variant": "Control", "Value": ctrl["balanced_accuracy"]},
+        {"Metric": "Default Capture (TPR)", "Variant": "Mitigated", "Value": mit["default_capture"]},
+        {"Metric": "Default Capture (TPR)", "Variant": "Control", "Value": ctrl["default_capture"]},
+        {"Metric": "Overall FPR", "Variant": "Mitigated", "Value": mit["overall_fpr"]},
+        {"Metric": "Overall FPR", "Variant": "Control", "Value": ctrl["overall_fpr"]},
+    ]
+    df_comp = pd.DataFrame(comp_rows)
+    c_bars = (
+        alt.Chart(df_comp)
+        .mark_bar()
+        .encode(
+            x=alt.X("Variant:N", title=None),
+            y=alt.Y("Value:Q", title="Metric Value"),
+            color=alt.Color("Variant:N", scale=alt.Scale(domain=["Mitigated", "Control"], range=["#7570b3", "#1b9e77"])),
+            tooltip=[alt.Tooltip("Metric:N"), alt.Tooltip("Variant:N"), alt.Tooltip("Value:Q", format=".4f")],
+        )
+        .properties(width=110, height=200)
+        .facet(column=alt.Column("Metric:N", title=None))
+    )
+    st.altair_chart(c_bars, use_container_width=True)
+    st.caption("Grouped bars comparing mitigated model against matched single-threshold control. Source: reports/metrics/mitigation_control.json")
+
+    st.subheader("2. Paired Differences (Mitigated minus Control) with 95% CIs")
+    metric_keys = [
+        ("equalized_odds_difference", "Equalized Odds Diff", "eo_difference"),
+        ("demographic_parity_difference", "Demographic Parity Diff", "dp_difference"),
+        ("balanced_accuracy", "Balanced Accuracy", "balanced_accuracy"),
+        ("default_capture", "Default Capture (TPR)", "default_capture"),
+        ("overall_fpr", "Overall FPR", "overall_fpr"),
+    ]
+    pair_rows = []
+    for full_k, disp_name, short_k in metric_keys:
+        m_val = pts[short_k]
+        ci = ci_dict[short_k]
+        pair_rows.append({
+            "Metric": disp_name,
+            "Paired Difference (Mit - Ctrl)": f"{m_val:+.4f}",
+            "95% CI Lower": f"{ci[0]:.4f}",
+            "95% CI Upper": f"{ci[1]:.4f}",
+        })
+    st.dataframe(pd.DataFrame(pair_rows), use_container_width=True)
+    st.caption("Source: reports/metrics/mitigation_control.json")
+
+
+# =============================================================================
+# PAGE 8: WHICH FEATURES MATTER (ABLATION)
+# =============================================================================
+def render_page_8_which_features_matter():
+    st.title("📊 Which Features Matter? (Ablation Analysis)")
+
+    abl_data = load_ablation_json()
+    models = abl_data["models"]
+
+    auc_b = models["model_b"]["auc"]
+    auc_b_minus_prev = models["model_b_minus_previous_application"]["auc"]
+    lift_thin_b = models["model_b"]["thin_file_lift_vs_a"]
+
+    takeaway = (
+        f"Ablating feature tables from Model B reveals that previous applications carry the highest incremental signal: "
+        f"removing previous_application drops overall AUC from {auc_b:.4f} to {auc_b_minus_prev:.4f}. "
+        f"In thin-file applicants, behavioral features provide +{lift_thin_b:.4f} AUC lift over Model A."
+    )
+    st.info(takeaway)
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Model B Overall AUC", f"{auc_b:.4f}")
+    col2.metric("Without Previous App AUC", f"{auc_b_minus_prev:.4f}", delta=f"{auc_b_minus_prev - auc_b:.4f}")
+    col3.metric("Thin-File Lift vs Model A", f"+{lift_thin_b:.4f}")
+
+    st.subheader("1. Ablation Model Comparison")
+    table_rows = []
+    plot_rows = []
+
+    for m_name, m_info in models.items():
+        delta_val = m_info["delta_auc_vs_ref"]
+        delta_ci = f"[{m_info['delta_auc_ci_lower']:.4f}, {m_info['delta_auc_ci_upper']:.4f}]" if m_info["compare_to"] else "N/A"
+        thin_lift = m_info.get("thin_file_lift_vs_a", 0.0)
+
+        table_rows.append({
+            "Model": m_name,
+            "Features": m_info["n_features"],
+            "Overall AUC": f"{m_info['auc']:.4f}",
+            "95% CI": f"[{m_info['auc_ci_lower']:.4f}, {m_info['auc_ci_upper']:.4f}]",
+            "Delta AUC vs Ref": f"{delta_val:+.4f}" if m_info["compare_to"] else "Baseline",
+            "Delta AUC 95% CI": delta_ci,
+            "Thin-File Lift vs A": f"{thin_lift:+.4f}",
+            "Gender DP Diff Change*": f"{m_info.get('change_gender_dp_vs_a', 0.0):+.4f}",
+            "Age DP Diff Change*": f"{m_info.get('change_age_dp_vs_a', 0.0):+.4f}",
+        })
+
+        plot_rows.append({
+            "Model": m_name,
+            "Overall AUC": m_info["auc"],
+            "CI Lower": m_info["auc_ci_lower"],
+            "CI Upper": m_info["auc_ci_upper"],
+        })
+
+    st.dataframe(pd.DataFrame(table_rows), use_container_width=True)
+    st.caption(
+        "*Note: Gap changes (marked with *) are POINT ESTIMATES ONLY (no confidence intervals were stored during ablation fits). "
+        "Source: reports/metrics/extras_ablation.json"
+    )
+
+    df_plot = pd.DataFrame(plot_rows)
+    c_abl = (
+        alt.Chart(df_plot)
+        .mark_bar(color="#2b5c8f")
+        .encode(
+            x=alt.X("Overall AUC:Q", scale=alt.Scale(domain=[0.74, 0.78]), title="Test AUC"),
+            y=alt.Y("Model:N", sort="-x", title=None),
+            tooltip=[alt.Tooltip("Model:N"), alt.Tooltip("Overall AUC:Q", format=".4f")],
+        )
+        .properties(height=320)
+    )
+    st.altair_chart(c_abl, use_container_width=True)
+    st.caption("Overall test AUC across ablation fits. Source: reports/metrics/extras_ablation.json")
+
+    st.subheader("2. Detailed Ablation Tradeoff Visualizations")
+    img_path = _PROJECT_ROOT / "reports" / "figures" / "extras_ablation.png"
+    if img_path.exists():
+        st.image(str(img_path), caption="Ablation study figures. Source: reports/figures/extras_ablation.png", use_container_width=True)
+
+
+# =============================================================================
+# PAGE 9: LIMITATIONS
+# =============================================================================
+def render_page_9_limitations():
+    st.title("📝 Limitations & Ethical Considerations")
+    lim_md = load_limitations_md()
+    st.markdown(lim_md)
+    st.caption("Source: docs/limitations.md")
 
 
 # =============================================================================
@@ -846,15 +1333,15 @@ def main():
     elif page == "Fairness and calibration":
         render_page_4_fairness_calibration()
     elif page == "Proxy leakage":
-        render_stage_3_placeholder("🔍 Proxy Leakage")
+        render_page_5_proxy_leakage()
     elif page == "Explanations":
-        render_stage_3_placeholder("💡 Explanations & Applicant Explorer")
+        render_page_6_explanations()
     elif page == "Mitigation lab":
-        render_stage_3_placeholder("⚖️ Mitigation Lab")
+        render_page_7_mitigation_lab()
     elif page == "Which features matter":
-        render_stage_3_placeholder("📊 Which Features Matter (Ablation)")
+        render_page_8_which_features_matter()
     elif page == "Limitations":
-        render_stage_3_placeholder("📝 Limitations & Ethical Considerations")
+        render_page_9_limitations()
 
     render_footer()
 

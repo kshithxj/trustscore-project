@@ -25,6 +25,23 @@ pytest -v
 
 ---
 
+## 1.1 Demo Dashboard
+
+Interactive Streamlit demonstration dashboard exploring model performance, flip dynamics, policy simulation, fairness tradeoffs, proxy leakage, SHAP applicant explanations, and post-processing mitigation:
+
+```bash
+# 1. Install dependencies
+pip install streamlit
+
+# 2. Precompute policy frontier table and SHAP applicant sample
+python -m src.app.precompute
+
+# 3. Launch the dashboard
+streamlit run src/app/streamlit_app.py
+```
+
+---
+
 ## 2. Dataset Source & Setup
 
 - **Dataset Source**: [Kaggle Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data)

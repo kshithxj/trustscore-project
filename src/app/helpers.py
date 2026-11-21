@@ -129,6 +129,55 @@ def load_auc_by_group_json() -> Dict[str, Any]:
 
 
 @st.cache_data
+def load_proxy_json() -> Dict[str, Any]:
+    path = _PROJECT_ROOT / "reports" / "metrics" / "proxy.json"
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+@st.cache_data
+def load_shap_summary_json() -> Dict[str, Any]:
+    path = _PROJECT_ROOT / "reports" / "metrics" / "shap_summary.json"
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+@st.cache_data
+def load_mitigation_control_json() -> Dict[str, Any]:
+    path = _PROJECT_ROOT / "reports" / "metrics" / "mitigation_control.json"
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+@st.cache_data
+def load_ablation_json() -> Dict[str, Any]:
+    path = _PROJECT_ROOT / "reports" / "metrics" / "extras_ablation.json"
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+@st.cache_data
+def load_shap_notes_md() -> str:
+    path = _PROJECT_ROOT / "reports" / "shap_notes.md"
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+@st.cache_data
+def load_limitations_md() -> str:
+    path = _PROJECT_ROOT / "docs" / "limitations.md"
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+@st.cache_data
+def load_shap_sample_parquet() -> pd.DataFrame:
+    path = _PROJECT_ROOT / "reports" / "predictions" / "extras" / "app_shap_sample.parquet"
+    return pd.read_parquet(path)
+
+
+
+@st.cache_data
 def load_val_scores() -> Tuple[np.ndarray, np.ndarray]:
     cfg = get_config()
     pdir = _PROJECT_ROOT / cfg["paths"]["predictions"]
