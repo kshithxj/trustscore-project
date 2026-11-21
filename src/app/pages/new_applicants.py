@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 
 from src.app.scoring import (
     load_scoring_resources,
@@ -29,6 +29,7 @@ from src.app.scoring import (
     ExplanationResult,
 )
 from src.app.helpers import load_flips_json, load_fairness_json
+from src.app.visuals import risk_gauge, decision_badge, score_histogram
 
 PAGE_DISCLAIMER = (
     "**Notice**: Every profile on this page is an anonymized historical held-out test applicant "
@@ -122,7 +123,19 @@ def render_single_applicant_card(applicant_id: int, is_guided_tour: bool = False
     st.markdown(f"### Held-Out Test Applicant: `{applicant_id}`")
     st.markdown(f"**Segment**: `{segment}` (anonymized historical record)")
 
-    # 1. Scores & Decisions
+    # 1. Scores & Visual Gauges
+    cg1, cg2 = st.columns(2)
+    with cg1:
+        st.markdown("**Model A (Bureau-only)**")
+        decision_badge(decision_a)
+        fig_a = risk_gauge(score_a, threshold_a, "Model A")
+        st.pyplot(fig_a, use_container_width=True)
+    with cg2:
+        st.markdown("**Model B (Bureau + Behavioral)**")
+        decision_badge(decision_b)
+        fig_b = risk_gauge(score_b, threshold_b, "Model B")
+        st.pyplot(fig_b, use_container_width=True)
+
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.metric("Model A Score", f"{score_a:.4f}", help="Default probability from Model A")

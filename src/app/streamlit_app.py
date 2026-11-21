@@ -55,18 +55,29 @@ from src.app.pages.new_applicants import (
     render_page_new_applicants,
     render_single_applicant_card,
 )
+from src.app.pages.studio import render_page_studio
+from src.app.pages.case_files import render_page_case_files
+from src.app.pages.check_applicant import render_page_check_applicant
+from src.app.visuals import apply_presenter_styling
 
 # -----------------------------------------------------------------------------
 # App Configuration
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="TrustScore Demo Dashboard",
-    page_icon="⚖️",
+    page_title="TrustScore Studio",
+    page_icon="🎯",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-PAGE_NAMES = [
+DEMO_PAGES = [
+    "TrustScore Studio",
+    "Check an applicant",
+    "Case files",
+    "New applicants",
+]
+
+RESEARCH_PAGES = [
     "Guided tour",
     "Does behavior help?",
     "Flip explorer",
@@ -77,8 +88,9 @@ PAGE_NAMES = [
     "Mitigation lab",
     "Which features matter",
     "Limitations",
-    "New applicants",
 ]
+
+PAGE_NAMES = DEMO_PAGES + RESEARCH_PAGES
 
 
 # =============================================================================
@@ -502,6 +514,9 @@ def render_page_0_guided_tour():
         )
         st.info(takeaway)
         render_single_applicant_card(app_id, is_guided_tour=True)
+        if st.button("📁 View More Examples in Case Files", key="btn_tour_cases_step6"):
+            st.session_state["nav_target"] = "Case files"
+            st.rerun()
 
     elif tour_step.startswith("7."):
         mit_data = load_mitigation_control_json()
@@ -514,6 +529,23 @@ def render_page_0_guided_tour():
         st.info(takeaway)
         st.altair_chart(build_mitigation_overview_chart(), use_container_width=True)
         st.caption("Source: reports/metrics/mitigation_control.json")
+
+        st.markdown("---")
+        st.markdown("### 🎯 Explore the Interactive Demo Studio")
+        st.markdown("Try live scoring, information source ablations, and canonical case files:")
+        cd1, cd2, cd3 = st.columns(3)
+        with cd1:
+            if st.button("📁 Open Case Files", key="btn_tour_to_cases"):
+                st.session_state["nav_target"] = "Case files"
+                st.rerun()
+        with cd2:
+            if st.button("🔍 Check an Applicant", key="btn_tour_to_check"):
+                st.session_state["nav_target"] = "Check an applicant"
+                st.rerun()
+        with cd3:
+            if st.button("👤 Open New Applicants", key="btn_tour_to_new"):
+                st.session_state["nav_target"] = "New applicants"
+                st.rerun()
 
 
 # =============================================================================
@@ -1319,12 +1351,30 @@ def render_page_9_limitations():
 # Main Application Router
 # =============================================================================
 def main():
-    st.sidebar.title("TrustScore Dashboard")
-    page = st.sidebar.radio("Navigation", PAGE_NAMES, index=0)
+    st.sidebar.title("TrustScore Studio")
+
+    # Presenter View switch
+    presenter_mode = st.sidebar.checkbox("Presenter view", value=False)
+    apply_presenter_styling(presenter_mode)
+
+    # Check for programmatic navigation request (e.g. from Studio entry cards or Guided Tour)
+    target_page = st.session_state.pop("nav_target", None)
+    default_idx = PAGE_NAMES.index(target_page) if target_page in PAGE_NAMES else 0
+
+    st.sidebar.markdown("**Sections**")
+    page = st.sidebar.radio("Navigation", PAGE_NAMES, index=default_idx)
 
     render_header_and_banner()
 
-    if page == "Guided tour":
+    if page == "TrustScore Studio":
+        render_page_studio()
+    elif page == "Check an applicant":
+        render_page_check_applicant()
+    elif page == "Case files":
+        render_page_case_files()
+    elif page == "New applicants":
+        render_page_new_applicants()
+    elif page == "Guided tour":
         render_page_0_guided_tour()
     elif page == "Does behavior help?":
         render_page_1_does_behavior_help()
@@ -1344,8 +1394,6 @@ def main():
         render_page_8_which_features_matter()
     elif page == "Limitations":
         render_page_9_limitations()
-    elif page == "New applicants":
-        render_page_new_applicants()
 
     render_footer()
 
