@@ -1,0 +1,433 @@
+{
+  "sanity_guard": {
+    "model_a_saved_auc": 0.7516521661749335,
+    "model_a_refit_auc": 0.7516521661749335,
+    "model_a_diff": 0.0,
+    "model_b_saved_auc": 0.7668099206739796,
+    "model_b_refit_auc": 0.7668099206739796,
+    "model_b_diff": 0.0,
+    "passed": true
+  },
+  "models": {
+    "model_a": {
+      "model_name": "model_a",
+      "type": "baseline",
+      "source": null,
+      "n_features": 124,
+      "compare_to": null,
+      "threshold": 0.143708,
+      "auc": 0.751652,
+      "auc_ci_lower": 0.745044,
+      "auc_ci_upper": 0.758377,
+      "thin_auc": 0.723296,
+      "thin_auc_ci_lower": 0.707265,
+      "thin_auc_ci_upper": 0.739383,
+      "delta_auc_vs_ref": 0.0,
+      "delta_auc_ci_lower": 0.0,
+      "delta_auc_ci_upper": 0.0,
+      "gender_dp_diff": 0.073101,
+      "gender_dp_ci": [
+        0.066922,
+        0.079453
+      ],
+      "gender_eo_diff": 0.080805,
+      "gender_eo_ci": [
+        0.060258,
+        0.107229
+      ],
+      "age_dp_diff": 0.117601,
+      "age_dp_ci": [
+        0.112515,
+        0.122778
+      ],
+      "age_eo_diff": 0.191178,
+      "age_eo_ci": [
+        0.165873,
+        0.216442
+      ],
+      "change_gender_dp_vs_a": 0.0,
+      "change_gender_eo_vs_a": 0.0,
+      "change_age_dp_vs_a": 0.0,
+      "change_age_eo_vs_a": 0.0,
+      "thin_file_lift_vs_a": 0.0
+    },
+    "model_b": {
+      "model_name": "model_b",
+      "type": "full",
+      "source": null,
+      "n_features": 144,
+      "compare_to": "model_a",
+      "threshold": 0.144659,
+      "auc": 0.76681,
+      "auc_ci_lower": 0.759674,
+      "auc_ci_upper": 0.773116,
+      "thin_auc": 0.75532,
+      "thin_auc_ci_lower": 0.739041,
+      "thin_auc_ci_upper": 0.772823,
+      "delta_auc_vs_ref": 0.015158,
+      "delta_auc_ci_lower": 0.01219,
+      "delta_auc_ci_upper": 0.017969,
+      "gender_dp_diff": 0.06973,
+      "gender_dp_ci": [
+        0.063298,
+        0.077262
+      ],
+      "gender_eo_diff": 0.085073,
+      "gender_eo_ci": [
+        0.058591,
+        0.112219
+      ],
+      "age_dp_diff": 0.108936,
+      "age_dp_ci": [
+        0.103912,
+        0.115733
+      ],
+      "age_eo_diff": 0.177718,
+      "age_eo_ci": [
+        0.152932,
+        0.205301
+      ],
+      "change_gender_dp_vs_a": -0.003371,
+      "change_gender_eo_vs_a": 0.004268,
+      "change_age_dp_vs_a": -0.008665,
+      "change_age_eo_vs_a": -0.01346,
+      "thin_file_lift_vs_a": 0.032024
+    },
+    "model_b_minus_previous_application": {
+      "model_name": "model_b_minus_previous_application",
+      "type": "b_minus",
+      "source": "previous_application",
+      "n_features": 138,
+      "compare_to": "model_b",
+      "threshold": 0.144078,
+      "auc": 0.7635,
+      "auc_ci_lower": 0.757127,
+      "auc_ci_upper": 0.770258,
+      "thin_auc": 0.747244,
+      "thin_auc_ci_lower": 0.731234,
+      "thin_auc_ci_upper": 0.761929,
+      "delta_auc_vs_ref": -0.00331,
+      "delta_auc_ci_lower": -0.004988,
+      "delta_auc_ci_upper": -0.001119,
+      "gender_dp_diff": 0.073023,
+      "gender_dp_ci": [
+        0.066034,
+        0.079544
+      ],
+      "gender_eo_diff": 0.085314,
+      "gender_eo_ci": [
+        0.060325,
+        0.111585
+      ],
+      "age_dp_diff": 0.111656,
+      "age_dp_ci": [
+        0.106444,
+        0.118148
+      ],
+      "age_eo_diff": 0.182887,
+      "age_eo_ci": [
+        0.157708,
+        0.21131
+      ],
+      "change_gender_dp_vs_a": -7.8e-05,
+      "change_gender_eo_vs_a": 0.004509,
+      "change_age_dp_vs_a": -0.005945,
+      "change_age_eo_vs_a": -0.008291,
+      "thin_file_lift_vs_a": 0.023948
+    },
+    "model_b_minus_installments_payments": {
+      "model_name": "model_b_minus_installments_payments",
+      "type": "b_minus",
+      "source": "installments_payments",
+      "n_features": 138,
+      "compare_to": "model_b",
+      "threshold": 0.144105,
+      "auc": 0.76213,
+      "auc_ci_lower": 0.755792,
+      "auc_ci_upper": 0.769105,
+      "thin_auc": 0.750884,
+      "thin_auc_ci_lower": 0.736125,
+      "thin_auc_ci_upper": 0.765336,
+      "delta_auc_vs_ref": -0.00468,
+      "delta_auc_ci_lower": -0.00692,
+      "delta_auc_ci_upper": -0.002366,
+      "gender_dp_diff": 0.06943,
+      "gender_dp_ci": [
+        0.062277,
+        0.075621
+      ],
+      "gender_eo_diff": 0.088779,
+      "gender_eo_ci": [
+        0.061214,
+        0.119006
+      ],
+      "age_dp_diff": 0.110436,
+      "age_dp_ci": [
+        0.105802,
+        0.116024
+      ],
+      "age_eo_diff": 0.177098,
+      "age_eo_ci": [
+        0.154088,
+        0.202469
+      ],
+      "change_gender_dp_vs_a": -0.003671,
+      "change_gender_eo_vs_a": 0.007974,
+      "change_age_dp_vs_a": -0.007165,
+      "change_age_eo_vs_a": -0.01408,
+      "thin_file_lift_vs_a": 0.027588
+    },
+    "model_b_minus_POS_CASH_balance": {
+      "model_name": "model_b_minus_POS_CASH_balance",
+      "type": "b_minus",
+      "source": "POS_CASH_balance",
+      "n_features": 140,
+      "compare_to": "model_b",
+      "threshold": 0.145659,
+      "auc": 0.765706,
+      "auc_ci_lower": 0.759074,
+      "auc_ci_upper": 0.772326,
+      "thin_auc": 0.754707,
+      "thin_auc_ci_lower": 0.738287,
+      "thin_auc_ci_upper": 0.769916,
+      "delta_auc_vs_ref": -0.001104,
+      "delta_auc_ci_lower": -0.00271,
+      "delta_auc_ci_upper": 0.000531,
+      "gender_dp_diff": 0.067539,
+      "gender_dp_ci": [
+        0.060836,
+        0.07486
+      ],
+      "gender_eo_diff": 0.082863,
+      "gender_eo_ci": [
+        0.056588,
+        0.109884
+      ],
+      "age_dp_diff": 0.110636,
+      "age_dp_ci": [
+        0.106232,
+        0.11705
+      ],
+      "age_eo_diff": 0.186035,
+      "age_eo_ci": [
+        0.163895,
+        0.21348
+      ],
+      "change_gender_dp_vs_a": -0.005562,
+      "change_gender_eo_vs_a": 0.002058,
+      "change_age_dp_vs_a": -0.006965,
+      "change_age_eo_vs_a": -0.005143,
+      "thin_file_lift_vs_a": 0.031411
+    },
+    "model_b_minus_credit_card_balance": {
+      "model_name": "model_b_minus_credit_card_balance",
+      "type": "b_minus",
+      "source": "credit_card_balance",
+      "n_features": 140,
+      "compare_to": "model_b",
+      "threshold": 0.145234,
+      "auc": 0.764238,
+      "auc_ci_lower": 0.757628,
+      "auc_ci_upper": 0.771095,
+      "thin_auc": 0.752561,
+      "thin_auc_ci_lower": 0.73582,
+      "thin_auc_ci_upper": 0.767787,
+      "delta_auc_vs_ref": -0.002572,
+      "delta_auc_ci_lower": -0.004466,
+      "delta_auc_ci_upper": -0.000985,
+      "gender_dp_diff": 0.067626,
+      "gender_dp_ci": [
+        0.060704,
+        0.073977
+      ],
+      "gender_eo_diff": 0.087064,
+      "gender_eo_ci": [
+        0.05688,
+        0.113928
+      ],
+      "age_dp_diff": 0.108909,
+      "age_dp_ci": [
+        0.104356,
+        0.115089
+      ],
+      "age_eo_diff": 0.17445,
+      "age_eo_ci": [
+        0.147692,
+        0.199884
+      ],
+      "change_gender_dp_vs_a": -0.005475,
+      "change_gender_eo_vs_a": 0.006259,
+      "change_age_dp_vs_a": -0.008692,
+      "change_age_eo_vs_a": -0.016728,
+      "thin_file_lift_vs_a": 0.029265
+    },
+    "model_a_plus_previous_application": {
+      "model_name": "model_a_plus_previous_application",
+      "type": "a_plus",
+      "source": "previous_application",
+      "n_features": 130,
+      "compare_to": "model_a",
+      "threshold": 0.145153,
+      "auc": 0.755839,
+      "auc_ci_lower": 0.749061,
+      "auc_ci_upper": 0.761951,
+      "thin_auc": 0.738577,
+      "thin_auc_ci_lower": 0.721866,
+      "thin_auc_ci_upper": 0.75558,
+      "delta_auc_vs_ref": 0.004187,
+      "delta_auc_ci_lower": 0.002155,
+      "delta_auc_ci_upper": 0.006071,
+      "gender_dp_diff": 0.073192,
+      "gender_dp_ci": [
+        0.066365,
+        0.079462
+      ],
+      "gender_eo_diff": 0.090646,
+      "gender_eo_ci": [
+        0.06314,
+        0.119263
+      ],
+      "age_dp_diff": 0.113525,
+      "age_dp_ci": [
+        0.108425,
+        0.118629
+      ],
+      "age_eo_diff": 0.183366,
+      "age_eo_ci": [
+        0.157572,
+        0.21125
+      ],
+      "change_gender_dp_vs_a": 9.1e-05,
+      "change_gender_eo_vs_a": 0.009841,
+      "change_age_dp_vs_a": -0.004076,
+      "change_age_eo_vs_a": -0.007812,
+      "thin_file_lift_vs_a": 0.015281
+    },
+    "model_a_plus_installments_payments": {
+      "model_name": "model_a_plus_installments_payments",
+      "type": "a_plus",
+      "source": "installments_payments",
+      "n_features": 130,
+      "compare_to": "model_a",
+      "threshold": 0.1451,
+      "auc": 0.758463,
+      "auc_ci_lower": 0.75211,
+      "auc_ci_upper": 0.765293,
+      "thin_auc": 0.735034,
+      "thin_auc_ci_lower": 0.71925,
+      "thin_auc_ci_upper": 0.750826,
+      "delta_auc_vs_ref": 0.006811,
+      "delta_auc_ci_lower": 0.004735,
+      "delta_auc_ci_upper": 0.008986,
+      "gender_dp_diff": 0.071766,
+      "gender_dp_ci": [
+        0.064901,
+        0.078563
+      ],
+      "gender_eo_diff": 0.079288,
+      "gender_eo_ci": [
+        0.058637,
+        0.102109
+      ],
+      "age_dp_diff": 0.115175,
+      "age_dp_ci": [
+        0.109518,
+        0.121145
+      ],
+      "age_eo_diff": 0.188828,
+      "age_eo_ci": [
+        0.165504,
+        0.214323
+      ],
+      "change_gender_dp_vs_a": -0.001335,
+      "change_gender_eo_vs_a": -0.001517,
+      "change_age_dp_vs_a": -0.002426,
+      "change_age_eo_vs_a": -0.00235,
+      "thin_file_lift_vs_a": 0.011738
+    },
+    "model_a_plus_POS_CASH_balance": {
+      "model_name": "model_a_plus_POS_CASH_balance",
+      "type": "a_plus",
+      "source": "POS_CASH_balance",
+      "n_features": 128,
+      "compare_to": "model_a",
+      "threshold": 0.143597,
+      "auc": 0.754685,
+      "auc_ci_lower": 0.748141,
+      "auc_ci_upper": 0.762082,
+      "thin_auc": 0.731686,
+      "thin_auc_ci_lower": 0.714807,
+      "thin_auc_ci_upper": 0.748356,
+      "delta_auc_vs_ref": 0.003033,
+      "delta_auc_ci_lower": 0.001327,
+      "delta_auc_ci_upper": 0.004638,
+      "gender_dp_diff": 0.073938,
+      "gender_dp_ci": [
+        0.066686,
+        0.080268
+      ],
+      "gender_eo_diff": 0.094556,
+      "gender_eo_ci": [
+        0.067455,
+        0.121364
+      ],
+      "age_dp_diff": 0.114119,
+      "age_dp_ci": [
+        0.108879,
+        0.119993
+      ],
+      "age_eo_diff": 0.190506,
+      "age_eo_ci": [
+        0.163407,
+        0.214224
+      ],
+      "change_gender_dp_vs_a": 0.000837,
+      "change_gender_eo_vs_a": 0.013751,
+      "change_age_dp_vs_a": -0.003482,
+      "change_age_eo_vs_a": -0.000672,
+      "thin_file_lift_vs_a": 0.00839
+    },
+    "model_a_plus_credit_card_balance": {
+      "model_name": "model_a_plus_credit_card_balance",
+      "type": "a_plus",
+      "source": "credit_card_balance",
+      "n_features": 128,
+      "compare_to": "model_a",
+      "threshold": 0.143765,
+      "auc": 0.756955,
+      "auc_ci_lower": 0.750315,
+      "auc_ci_upper": 0.763716,
+      "thin_auc": 0.732154,
+      "thin_auc_ci_lower": 0.71681,
+      "thin_auc_ci_upper": 0.747979,
+      "delta_auc_vs_ref": 0.005303,
+      "delta_auc_ci_lower": 0.00322,
+      "delta_auc_ci_upper": 0.007199,
+      "gender_dp_diff": 0.072123,
+      "gender_dp_ci": [
+        0.066567,
+        0.0788
+      ],
+      "gender_eo_diff": 0.075291,
+      "gender_eo_ci": [
+        0.059402,
+        0.100636
+      ],
+      "age_dp_diff": 0.118783,
+      "age_dp_ci": [
+        0.113665,
+        0.124286
+      ],
+      "age_eo_diff": 0.20987,
+      "age_eo_ci": [
+        0.1876,
+        0.235486
+      ],
+      "change_gender_dp_vs_a": -0.000978,
+      "change_gender_eo_vs_a": -0.005514,
+      "change_age_dp_vs_a": 0.001182,
+      "change_age_eo_vs_a": 0.018692,
+      "thin_file_lift_vs_a": 0.008858
+    }
+  }
+}
