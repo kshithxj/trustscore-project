@@ -27,7 +27,7 @@ pytest -v
 
 ## 1.1 Demo Dashboard
 
-Interactive Streamlit demonstration dashboard exploring model performance, flip dynamics, policy simulation, fairness tradeoffs, proxy leakage, SHAP applicant explanations, and post-processing mitigation:
+Interactive Streamlit demonstration dashboard exploring model performance, flip dynamics, policy simulation, fairness tradeoffs, proxy leakage, SHAP applicant explanations, post-processing mitigation, and live scoring of held-out test applicants:
 
 ```bash
 # 1. Install dependencies

@@ -51,6 +51,10 @@ from src.app.helpers import (
     compute_live_policy,
     check_consistency_at_15,
 )
+from src.app.pages.new_applicants import (
+    render_page_new_applicants,
+    render_single_applicant_card,
+)
 
 # -----------------------------------------------------------------------------
 # App Configuration
@@ -73,6 +77,7 @@ PAGE_NAMES = [
     "Mitigation lab",
     "Which features matter",
     "Limitations",
+    "New applicants",
 ]
 
 
@@ -484,22 +489,19 @@ def render_page_0_guided_tour():
 
     elif tour_step.startswith("6."):
         shap_sum = load_shap_summary_json()
-        lexp = shap_sum["local_explanation"]
-        app_id = lexp["applicant_id"]
-        app_score = lexp["score"]
-        top_feat = lexp["top_8_contributions"][0]["feature"]
-        top_contrib = lexp["top_8_contributions"][0]["shap_value"]
+        lexp = shap_sum.get("chosen_local_applicant") or shap_sum.get("local_explanation", {})
+        app_id = int(lexp.get("SK_ID_CURR", lexp.get("applicant_id", 333107)))
+        app_score = float(lexp.get("score", 0.2153))
+        top_contribs = lexp.get("top_8_contributions", [{"feature": "EXT_SOURCE_2", "shap_value": 1.1069}])
+        top_feat = top_contribs[0]["feature"]
+        top_contrib = top_contribs[0]["shap_value"]
 
         takeaway = (
             f"Local explanation for the median declined thin-file applicant ({app_id}, score {app_score:.4f}): "
             f"the strongest risk driver is {top_feat} (+{top_contrib:.4f} log-odds), illustrating how TreeSHAP attributes decision margins."
         )
         st.info(takeaway)
-        img_path = _PROJECT_ROOT / "reports" / "figures" / "shap_local_declined_thin_file.png"
-        if img_path.exists():
-            st.image(str(img_path), caption="Local explanation for median declined thin-file applicant (SK_ID_CURR 333107). Source: reports/figures/shap_local_declined_thin_file.png", use_container_width=True)
-        else:
-            st.caption("Source: reports/metrics/shap_summary.json")
+        render_single_applicant_card(app_id, is_guided_tour=True)
 
     elif tour_step.startswith("7."):
         mit_data = load_mitigation_control_json()
@@ -1342,6 +1344,8 @@ def main():
         render_page_8_which_features_matter()
     elif page == "Limitations":
         render_page_9_limitations()
+    elif page == "New applicants":
+        render_page_new_applicants()
 
     render_footer()
 
